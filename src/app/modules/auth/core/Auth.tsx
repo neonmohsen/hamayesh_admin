@@ -11,12 +11,13 @@ import {
 import {LayoutSplashScreen} from '../../../../_metronic/layout/core'
 import {AuthModel, UserModel} from './_models'
 import * as authHelper from './AuthHelpers'
-import {getUserByToken} from './_requests'
+import {getUserByToken, LOGOUT_URL} from './_requests'
 import {WithChildren} from '../../../../_metronic/helpers'
+import axios from 'axios'
 
 type AuthContextProps = {
-  auth: AuthModel | undefined
-  saveAuth: (auth: AuthModel | undefined) => void
+  auth: any
+  saveAuth: (auth: any) => void
   currentUser: UserModel | undefined
   setCurrentUser: Dispatch<SetStateAction<UserModel | undefined>>
   logout: () => void
@@ -37,9 +38,9 @@ const useAuth = () => {
 }
 
 const AuthProvider: FC<WithChildren> = ({children}) => {
-  const [auth, setAuth] = useState<AuthModel | undefined>(authHelper.getAuth())
+  const [auth, setAuth] = useState<any>(authHelper.getAuth())
   const [currentUser, setCurrentUser] = useState<UserModel | undefined>()
-  const saveAuth = (auth: AuthModel | undefined) => {
+  const saveAuth = (auth: any) => {
     setAuth(auth)
     if (auth) {
       authHelper.setAuth(auth)
@@ -48,7 +49,18 @@ const AuthProvider: FC<WithChildren> = ({children}) => {
     }
   }
 
-  const logout = () => {
+  const logout = async () => {
+    try {
+      // Request to server for logging out, this URL is your server's API endpoint for logout
+      await axios.post(LOGOUT_URL, null, {
+        // If needed, you can add headers here, for instance, if your server requires an auth token
+        // headers: { 'Authorization': `Bearer ${auth?.data.api_token}` },
+      })
+    } catch (error) {
+      // Handle logout error, e.g., by logging or displaying a message to the user
+      console.error('Server logout error', error)
+    }
+
     saveAuth(undefined)
     setCurrentUser(undefined)
   }
@@ -71,7 +83,7 @@ const AuthInit: FC<WithChildren> = ({children}) => {
         if (!didRequest.current) {
           const {data} = await getUserByToken(apiToken)
           if (data) {
-            setCurrentUser(data)
+            setCurrentUser(data.data)
           }
         }
       } catch (error) {
@@ -86,10 +98,9 @@ const AuthInit: FC<WithChildren> = ({children}) => {
       return () => (didRequest.current = true)
     }
 
-    if (auth && auth.data.api_token) {
-      requestUser(auth.data.api_token)
+    if (auth && auth.api_token) {
+      requestUser(auth.api_token)
     } else {
-      logout()
       setShowSplashScreen(false)
     }
     // eslint-disable-next-line

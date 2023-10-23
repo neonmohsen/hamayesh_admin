@@ -20,7 +20,7 @@ const HeaderUserMenu: FC = () => {
 
           <div className='d-flex flex-column'>
             <div className='fw-bold d-flex align-items-center fs-5'>
-              {currentUser?.firstName} {currentUser?.last_name}
+              {currentUser?.firstName} {currentUser?.lastName}
               <span className='badge badge-light-success fw-bold fs-8 px-2 py-1 ms-2'>Pro</span>
             </div>
             <a href='#' className='fw-semibold text-muted text-hover-primary fs-7'>
