@@ -63,3 +63,10 @@ export interface UserModel {
   address?: UserAddressModel
   socialNetworks?: UserSocialNetworksModel
 }
+// This should reflect the structure of your state/city data
+export interface ILocation {
+  _id: string // or number, if the ID is a numeric value
+  state?: string
+  city?: string
+  // ... any other properties that might exist on your state/city objects
+}

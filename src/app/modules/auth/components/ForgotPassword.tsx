@@ -4,20 +4,25 @@ import clsx from 'clsx'
 import {Link} from 'react-router-dom'
 import {useFormik} from 'formik'
 import {requestPassword} from '../core/_requests'
+import {useNavigate} from 'react-router-dom'
+import {useIntl} from 'react-intl'
 
 const initialValues = {
-  email: 'admin@demo.com',
+  email: 'mohsen.rezvani.rad33@gmail.com',
 }
 
-const forgotPasswordSchema = Yup.object().shape({
-  email: Yup.string()
-    .email('Wrong email format')
-    .min(3, 'Minimum 3 symbols')
-    .max(50, 'Maximum 50 symbols')
-    .required('Email is required'),
-})
-
 export function ForgotPassword() {
+  const navigate = useNavigate()
+  const intl = useIntl()
+
+  const forgotPasswordSchema = Yup.object().shape({
+    email: Yup.string()
+      .email(intl.formatMessage({id: 'errors.email.format'}))
+      .min(3, intl.formatMessage({id: 'errors.email.min'}))
+      .max(50, intl.formatMessage({id: 'errors.email.max'}))
+      .required(intl.formatMessage({id: 'errors.email.required'})),
+  })
+
   const [loading, setLoading] = useState(false)
   const [hasErrors, setHasErrors] = useState<boolean | undefined>(undefined)
   const formik = useFormik({
@@ -31,8 +36,9 @@ export function ForgotPassword() {
           .then(({data: {result}}) => {
             setHasErrors(false)
             setLoading(false)
+            navigate('/auth/reset-password', {state: {emailSent: true}})
           })
-          .catch(() => {
+          .catch((error) => {
             setHasErrors(true)
             setLoading(false)
             setSubmitting(false)
@@ -51,7 +57,9 @@ export function ForgotPassword() {
     >
       <div className='text-center mb-10'>
         {/* begin::Title */}
-        <h1 className='text-dark fw-bolder mb-3'>Forgot Password ?</h1>
+        <h1 className='text-dark fw-bolder mb-3'>
+          {intl.formatMessage({id: 'AUTH.FORGET.TITLE'})}
+        </h1>
         {/* end::Title */}
 
         {/* begin::Link */}
@@ -79,10 +87,13 @@ export function ForgotPassword() {
 
       {/* begin::Form group */}
       <div className='fv-row mb-8'>
-        <label className='form-label fw-bolder text-gray-900 fs-6'>Email</label>
+        <label className='form-label fw-bolder text-gray-900 fs-6'>
+          {' '}
+          {intl.formatMessage({id: 'AUTH.INPUT.EMAIL'})}
+        </label>
         <input
           type='email'
-          placeholder=''
+          placeholder={intl.formatMessage({id: 'AUTH.INPUT.EMAIL'})}
           autoComplete='off'
           {...formik.getFieldProps('email')}
           className={clsx(
@@ -106,10 +117,13 @@ export function ForgotPassword() {
       {/* begin::Form group */}
       <div className='d-flex flex-wrap justify-content-center pb-lg-0'>
         <button type='submit' id='kt_password_reset_submit' className='btn btn-primary me-4'>
-          <span className='indicator-label'>Submit</span>
+          <span className='indicator-label'>
+            {' '}
+            {intl.formatMessage({id: 'AUTH.CONTINUE.BUTTON'})}
+          </span>
           {loading && (
             <span className='indicator-progress'>
-              Please wait...
+              {intl.formatMessage({id: 'AUTH.BOTTUN.LOADING'})}
               <span className='spinner-border spinner-border-sm align-middle ms-2'></span>
             </span>
           )}
@@ -121,7 +135,7 @@ export function ForgotPassword() {
             className='btn btn-light'
             disabled={formik.isSubmitting || !formik.isValid}
           >
-            Cancel
+            {intl.formatMessage({id: 'AUTH.BOTTUN.CANCEL'})}
           </button>
         </Link>{' '}
       </div>

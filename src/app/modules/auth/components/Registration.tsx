@@ -4,54 +4,86 @@ import {useState, useEffect} from 'react'
 import {useFormik} from 'formik'
 import * as Yup from 'yup'
 import clsx from 'clsx'
-import {getUserByToken, register} from '../core/_requests'
+import {fetchCities, fetchStates, getUserByToken, register} from '../core/_requests'
 import {Link} from 'react-router-dom'
-import {toAbsoluteUrl} from '../../../../_metronic/helpers'
 import {PasswordMeterComponent} from '../../../../_metronic/assets/ts/components'
 import {useAuth} from '../core/Auth'
+import {ILocation} from '../core/_models'
+import {useIntl} from 'react-intl'
+import {isCustomError} from '../../../../_metronic/helpers'
 
 const initialValues = {
   firstname: '',
   lastname: '',
   email: '',
   password: '',
-  changepassword: '',
-  acceptTerms: false,
+  // changepassword: '',
+  phoneNumber: '', // new field
+  national_id: '', // new field
+  gender: '', // new field
+  study_field: '',
+  institute: '',
+  degree: '',
+  state: '',
+  city: '',
+  job: '',
+  // acceptTerms: false,
 }
 
-const registrationSchema = Yup.object().shape({
-  firstname: Yup.string()
-    .min(3, 'Minimum 3 symbols')
-    .max(50, 'Maximum 50 symbols')
-    .required('First name is required'),
-  email: Yup.string()
-    .email('Wrong email format')
-    .min(3, 'Minimum 3 symbols')
-    .max(50, 'Maximum 50 symbols')
-    .required('Email is required'),
-  lastname: Yup.string()
-    .min(3, 'Minimum 3 symbols')
-    .max(50, 'Maximum 50 symbols')
-    .required('Last name is required'),
-  password: Yup.string()
-    .min(3, 'Minimum 3 symbols')
-    .max(50, 'Maximum 50 symbols')
-    .required('Password is required'),
-  changepassword: Yup.string()
-    .min(3, 'Minimum 3 symbols')
-    .max(50, 'Maximum 50 symbols')
-    .required('Password confirmation is required')
-    .oneOf([Yup.ref('password')], "Password and Confirm Password didn't match"),
-  acceptTerms: Yup.bool().required('You must accept the terms and conditions'),
-})
-
 export function Registration() {
+  const intl = useIntl()
+
+  const registrationSchema = Yup.object().shape({
+    firstname: Yup.string()
+      .min(3, intl.formatMessage({id: 'errors.firstname.min'}))
+      .max(50, intl.formatMessage({id: 'errors.firstname.max'}))
+      .required(intl.formatMessage({id: 'errors.firstname.required'})),
+    email: Yup.string()
+      .email(intl.formatMessage({id: 'errors.email.format'}))
+      .min(3, intl.formatMessage({id: 'errors.email.min'}))
+      .max(50, intl.formatMessage({id: 'errors.email.max'}))
+      .required(intl.formatMessage({id: 'errors.email.required'})),
+    lastname: Yup.string()
+      .min(3, intl.formatMessage({id: 'errors.lastname.min'}))
+      .max(50, intl.formatMessage({id: 'errors.lastname.max'}))
+      .required(intl.formatMessage({id: 'errors.lastname.required'})),
+    password: Yup.string()
+      .min(3, intl.formatMessage({id: 'errors.password.min'}))
+      .max(50, intl.formatMessage({id: 'errors.password.max'}))
+      .required(intl.formatMessage({id: 'errors.password.required'})),
+    // changepassword: Yup.string()
+    //   .min(3, 'Minimum 3 symbols')
+    //   .max(50, 'Maximum 50 symbols')
+    //   .required('Password confirmation is required')
+    //   .oneOf([Yup.ref('password')], "Password and Confirm Password didn't match"),
+    study_field: Yup.string()
+      .min(2, intl.formatMessage({id: 'errors.study_field.min'}))
+      .max(50, intl.formatMessage({id: 'errors.study_field.max'}))
+      .required('Required'),
+    institute: Yup.string()
+      .min(2, intl.formatMessage({id: 'errors.institute.min'}))
+      .max(50, intl.formatMessage({id: 'errors.institute.max'}))
+      .required(intl.formatMessage({id: 'errors.institute.required'})),
+    degree: Yup.string().required(intl.formatMessage({id: 'errors.degree.required'})),
+    phoneNumber: Yup.string().required(intl.formatMessage({id: 'errors.phoneNumber.required'})), // Add suitable validation
+    national_id: Yup.string().required(intl.formatMessage({id: 'errors.national_id.required'})), // Add suitable validation
+    gender: Yup.string().required(intl.formatMessage({id: 'errors.gender.required'})),
+    state: Yup.string().required(intl.formatMessage({id: 'errors.state.required'})),
+    city: Yup.string().required(intl.formatMessage({id: 'errors.city.required'})),
+    job: Yup.string().required(intl.formatMessage({id: 'errors.job.required'})),
+
+    // acceptTerms: Yup.bool().required('You must accept the terms and conditions'),
+  })
+
+  const [states, setStates] = useState<ILocation[]>([])
+  const [cities, setCities] = useState<ILocation[]>([]) // for storing cities based on selected state
+
   const [loading, setLoading] = useState(false)
   const {saveAuth, setCurrentUser} = useAuth()
   const formik = useFormik({
     initialValues,
     validationSchema: registrationSchema,
-    onSubmit: async (values, {setStatus, setSubmitting}) => {
+    onSubmit: async (values, {setStatus, setSubmitting, setFieldError}) => {
       setLoading(true)
       try {
         const {data: auth} = await register(
@@ -59,24 +91,63 @@ export function Registration() {
           values.firstname,
           values.lastname,
           values.password,
-          values.changepassword
+          values.phoneNumber,
+          values.national_id,
+          values.gender,
+          values.study_field,
+          values.degree,
+          values.institute,
+          values.state,
+          values.city,
+          values.job
         )
-        saveAuth(auth)
-        const {data: user} = await getUserByToken(auth.api_token)
-        setCurrentUser(user)
+        saveAuth(auth.data)
+        const {data: user} = await getUserByToken(auth.data.api_token)
+        setCurrentUser(user.data)
       } catch (error) {
         console.error(error)
         saveAuth(undefined)
-        setStatus('The registration details is incorrect')
         setSubmitting(false)
         setLoading(false)
+
+        if (isCustomError(error)) {
+          const errorMessage = error.response.data.message
+          setStatus(errorMessage)
+
+          const fieldErrors = error.response.data.errors
+          if (fieldErrors) {
+            Object.keys(fieldErrors).forEach((field) => {
+              setFieldError(field, fieldErrors[field].join(', '))
+            })
+          }
+        } else {
+          setStatus('The registration details are incorrect.')
+        }
       }
     },
   })
 
   useEffect(() => {
+    fetchStates().then((data) => setStates(data))
+    // similarly for fetchCities if needed
+  }, [])
+  useEffect(() => {
     PasswordMeterComponent.bootstrap()
   }, [])
+
+  const handleStateChange = async (event) => {
+    const stateValue = event.target.value
+    formik.setFieldValue('state', stateValue) // update formik state
+    formik.setFieldValue('city', '')
+    // Fetch the cities based on the selected state
+    const citiesData = await fetchCities(stateValue) // here, stateValue should be the stateId you wish to use for the lookup
+    if (citiesData) {
+      setCities(citiesData)
+    } else {
+      // handle the scenario when fetching cities fails
+      setCities([])
+    }
+  }
 
   return (
     <form
@@ -88,61 +159,13 @@ export function Registration() {
       {/* begin::Heading */}
       <div className='text-center mb-11'>
         {/* begin::Title */}
-        <h1 className='text-dark fw-bolder mb-3'>Sign Up</h1>
+        <h1 className='text-dark fw-bolder mb-3'>
+          {' '}
+          {intl.formatMessage({id: 'AUTH.REGISTER.TITLE'})}
+        </h1>
         {/* end::Title */}
-
-        <div className='text-gray-500 fw-semibold fs-6'>Your Social Campaigns</div>
       </div>
       {/* end::Heading */}
-
-      {/* begin::Login options */}
-      <div className='row g-3 mb-9'>
-        {/* begin::Col */}
-        <div className='col-md-6'>
-          {/* begin::Google link */}
-          <a
-            href='#'
-            className='btn btn-flex btn-outline btn-text-gray-700 btn-active-color-primary bg-state-light flex-center text-nowrap w-100'
-          >
-            <img
-              alt='Logo'
-              src={toAbsoluteUrl('/media/svg/brand-logos/google-icon.svg')}
-              className='h-15px me-3'
-            />
-            Sign in with Google
-          </a>
-          {/* end::Google link */}
-        </div>
-        {/* end::Col */}
-
-        {/* begin::Col */}
-        <div className='col-md-6'>
-          {/* begin::Google link */}
-          <a
-            href='#'
-            className='btn btn-flex btn-outline btn-text-gray-700 btn-active-color-primary bg-state-light flex-center text-nowrap w-100'
-          >
-            <img
-              alt='Logo'
-              src={toAbsoluteUrl('/media/svg/brand-logos/apple-black.svg')}
-              className='theme-light-show h-15px me-3'
-            />
-            <img
-              alt='Logo'
-              src={toAbsoluteUrl('/media/svg/brand-logos/apple-black-dark.svg')}
-              className='theme-dark-show h-15px me-3'
-            />
-            Sign in with Apple
-          </a>
-          {/* end::Google link */}
-        </div>
-        {/* end::Col */}
-      </div>
-      {/* end::Login options */}
-
-      <div className='separator separator-content my-14'>
-        <span className='w-125px text-gray-500 fw-semibold fs-7'>Or with email</span>
-      </div>
 
       {formik.status && (
         <div className='mb-lg-15 alert alert-danger'>
@@ -152,9 +175,12 @@ export function Registration() {
 
       {/* begin::Form group Firstname */}
       <div className='fv-row mb-8'>
-        <label className='form-label fw-bolder text-dark fs-6'>First name</label>
+        <label className='form-label fw-bolder text-dark fs-6'>
+          {' '}
+          {intl.formatMessage({id: 'AUTH.INPUT.FIRSTNAME'})}
+        </label>
         <input
-          placeholder='First name'
+          placeholder={intl.formatMessage({id: 'AUTH.INPUT.FIRSTNAME'})}
           type='text'
           autoComplete='off'
           {...formik.getFieldProps('firstname')}
@@ -179,9 +205,12 @@ export function Registration() {
       {/* end::Form group */}
       <div className='fv-row mb-8'>
         {/* begin::Form group Lastname */}
-        <label className='form-label fw-bolder text-dark fs-6'>Last name</label>
+        <label className='form-label fw-bolder text-dark fs-6'>
+          {' '}
+          {intl.formatMessage({id: 'AUTH.INPUT.LASTNAME'})}
+        </label>
         <input
-          placeholder='Last name'
+          placeholder={intl.formatMessage({id: 'AUTH.INPUT.LASTNAME'})}
           type='text'
           autoComplete='off'
           {...formik.getFieldProps('lastname')}
@@ -205,11 +234,40 @@ export function Registration() {
         {/* end::Form group */}
       </div>
 
+      <div className='fv-row mb-8'>
+        <label className='form-label fw-bolder text-dark fs-6'>
+          {' '}
+          {intl.formatMessage({id: 'AUTH.INPUT.PHONENUMBER'})}
+        </label>
+        <input
+          placeholder={intl.formatMessage({id: 'AUTH.INPUT.PHONENUMBER'})}
+          type='text'
+          {...formik.getFieldProps('phoneNumber')}
+          className={clsx(
+            'form-control bg-transparent',
+            {
+              'is-invalid': formik.touched.phoneNumber && formik.errors.phoneNumber,
+            },
+            {
+              'is-valid': formik.touched.phoneNumber && !formik.errors.phoneNumber,
+            }
+          )}
+        />
+        {formik.touched.phoneNumber && formik.errors.phoneNumber ? (
+          <div className='fv-plugins-message-container'>
+            <div className='fv-help-block'>{formik.errors.phoneNumber}</div>
+          </div>
+        ) : null}
+      </div>
+
       {/* begin::Form group Email */}
       <div className='fv-row mb-8'>
-        <label className='form-label fw-bolder text-dark fs-6'>Email</label>
+        <label className='form-label fw-bolder text-dark fs-6'>
+          {' '}
+          {intl.formatMessage({id: 'AUTH.INPUT.EMAIL'})}
+        </label>
         <input
-          placeholder='Email'
+          placeholder={intl.formatMessage({id: 'AUTH.INPUT.EMAIL'})}
           type='email'
           autoComplete='off'
           {...formik.getFieldProps('email')}
@@ -231,14 +289,252 @@ export function Registration() {
       </div>
       {/* end::Form group */}
 
+      {/* new form group for National ID */}
+      <div className='fv-row mb-8'>
+        <label className='form-label fw-bolder text-dark fs-6'>
+          {' '}
+          {intl.formatMessage({id: 'AUTH.INPUT.NATIONALID'})}
+        </label>
+        <input
+          placeholder={intl.formatMessage({id: 'AUTH.INPUT.NATIONALID'})}
+          type='text'
+          {...formik.getFieldProps('national_id')}
+          className={clsx(
+            'form-control bg-transparent',
+            {
+              'is-invalid': formik.touched.national_id && formik.errors.national_id,
+            },
+            {
+              'is-valid': formik.touched.national_id && !formik.errors.national_id,
+            }
+          )}
+        />
+        {formik.touched.national_id && formik.errors.national_id ? (
+          <div className='fv-plugins-message-container'>
+            <div className='fv-help-block'>{formik.errors.national_id}</div>
+          </div>
+        ) : null}
+      </div>
+
+      {/* new form group for Study field */}
+      <div className='fv-row mb-8'>
+        <label className='form-label fw-bolder text-dark fs-6'>
+          {' '}
+          {intl.formatMessage({id: 'AUTH.INPUT.STUDYFIELD'})}
+        </label>
+        <input
+          placeholder={intl.formatMessage({id: 'AUTH.INPUT.STUDYFIELD'})}
+          type='text'
+          {...formik.getFieldProps('study_field')}
+          className={clsx(
+            'form-control bg-transparent',
+            {
+              'is-invalid': formik.touched.study_field && formik.errors.study_field,
+            },
+            {
+              'is-valid': formik.touched.study_field && !formik.errors.study_field,
+            }
+          )}
+        />
+        {formik.touched.study_field && formik.errors.study_field ? (
+          <div className='fv-plugins-message-container'>
+            <div className='fv-help-block'>{formik.errors.study_field}</div>
+          </div>
+        ) : null}
+      </div>
+
+      {/* new form group for Study field */}
+      <div className='fv-row mb-8'>
+        <label className='form-label fw-bolder text-dark fs-6'>
+          {' '}
+          {intl.formatMessage({id: 'AUTH.INPUT.INSTITUTE'})}
+        </label>
+        <input
+          placeholder={intl.formatMessage({id: 'AUTH.INPUT.INSTITUTE'})}
+          type='text'
+          {...formik.getFieldProps('institute')}
+          className={clsx(
+            'form-control bg-transparent',
+            {
+              'is-invalid': formik.touched.institute && formik.errors.institute,
+            },
+            {
+              'is-valid': formik.touched.institute && !formik.errors.institute,
+            }
+          )}
+        />
+        {formik.touched.institute && formik.errors.institute ? (
+          <div className='fv-plugins-message-container'>
+            <div className='fv-help-block'>{formik.errors.institute}</div>
+          </div>
+        ) : null}
+      </div>
+
+      {/* new form group for Study field */}
+      <div className='fv-row mb-8'>
+        <label className='form-label fw-bolder text-dark fs-6'>
+          {' '}
+          {intl.formatMessage({id: 'AUTH.INPUT.JOB'})}
+        </label>
+        <input
+          placeholder={intl.formatMessage({id: 'AUTH.INPUT.JOB'})}
+          type='text'
+          {...formik.getFieldProps('job')}
+          className={clsx(
+            'form-control bg-transparent',
+            {
+              'is-invalid': formik.touched.job && formik.errors.job,
+            },
+            {
+              'is-valid': formik.touched.job && !formik.errors.job,
+            }
+          )}
+        />
+        {formik.touched.job && formik.errors.job ? (
+          <div className='fv-plugins-message-container'>
+            <div className='fv-help-block'>{formik.errors.job}</div>
+          </div>
+        ) : null}
+      </div>
+
+      {/* new form group for Gender */}
+      <div className='fv-row mb-8'>
+        <label className='form-label fw-bolder text-dark fs-6'>
+          {' '}
+          {intl.formatMessage({id: 'AUTH.INPUT.DEGREE'})}
+        </label>
+        <select
+          {...formik.getFieldProps('degree')}
+          className={clsx(
+            'form-control bg-transparent',
+            {
+              'is-invalid': formik.touched.degree && formik.errors.degree,
+            },
+            {
+              'is-valid': formik.touched.degree && !formik.errors.degree,
+            }
+          )}
+        >
+          <option value=''> {intl.formatMessage({id: 'AUTH.INPUT.DEGREE'})}</option>
+          <option value='male'> {intl.formatMessage({id: 'AUTH.INPUT.MALE'})}</option>
+          <option value='female'> {intl.formatMessage({id: 'AUTH.INPUT.FEMALE'})}</option>
+          {/* other options if needed */}
+        </select>
+        {formik.touched.degree && formik.errors.degree ? (
+          <div className='fv-plugins-message-container'>
+            <div className='fv-help-block'>{formik.errors.degree}</div>
+          </div>
+        ) : null}
+      </div>
+
+      {/* new form group for Gender */}
+      <div className='fv-row mb-8'>
+        <label className='form-label fw-bolder text-dark fs-6'>
+          {' '}
+          {intl.formatMessage({id: 'AUTH.INPUT.GENDER'})}
+        </label>
+        <select
+          {...formik.getFieldProps('gender')}
+          className={clsx(
+            'form-control bg-transparent',
+            {
+              'is-invalid': formik.touched.gender && formik.errors.gender,
+            },
+            {
+              'is-valid': formik.touched.gender && !formik.errors.gender,
+            }
+          )}
+        >
+          <option value=''> {intl.formatMessage({id: 'AUTH.INPUT.GENDER'})}</option>
+          <option value='male'> {intl.formatMessage({id: 'AUTH.INPUT.MALE'})}</option>
+          <option value='female'> {intl.formatMessage({id: 'AUTH.INPUT.FEMALE'})}</option>
+          {/* other options if needed */}
+        </select>
+        {formik.touched.gender && formik.errors.gender ? (
+          <div className='fv-plugins-message-container'>
+            <div className='fv-help-block'>{formik.errors.gender}</div>
+          </div>
+        ) : null}
+      </div>
+
+      {/* State dropdown */}
+      <div className='fv-row mb-8'>
+        <label className='form-label fw-bolder text-dark fs-6'>
+          {intl.formatMessage({id: 'AUTH.INPUT.STATE'})}
+        </label>
+        <select
+          {...formik.getFieldProps('state')}
+          className={clsx(
+            'form-control bg-transparent',
+            {
+              'is-invalid': formik.touched.state && formik.errors.state,
+            },
+            {
+              'is-valid': formik.touched.state && !formik.errors.state,
+            }
+          )}
+          onChange={(e) => {
+            handleStateChange(e) // then load cities
+          }}
+        >
+          <option value=''> {intl.formatMessage({id: 'AUTH.INPUT.STATE'})}</option>
+          {states.map((state) => (
+            <option key={state._id} value={state._id}>
+              {state.state}
+            </option> // assuming 'id' and 'name' fields exist
+          ))}
+        </select>
+        {formik.touched.state && formik.errors.state ? (
+          <div className='fv-plugins-message-container'>
+            <div className='fv-help-block'>{formik.errors.state}</div>
+          </div>
+        ) : null}
+      </div>
+
+      {/* City dropdown */}
+      <div className='fv-row mb-8'>
+        <label className='form-label fw-bolder text-dark fs-6'>
+          {' '}
+          {intl.formatMessage({id: 'AUTH.INPUT.CITY'})}
+        </label>
+        <select
+          {...formik.getFieldProps('city')}
+          className={clsx(
+            'form-control bg-transparent',
+            {
+              'is-invalid': formik.touched.city && formik.errors.city,
+            },
+            {
+              'is-valid': formik.touched.city && !formik.errors.city,
+            }
+          )}
+          disabled={!formik.values.state} // disable if no state is selected
+        >
+          <option value=''> {intl.formatMessage({id: 'AUTH.INPUT.CITY'})}</option>
+          {cities.map((city) => (
+            <option key={city._id} value={city._id}>
+              {city.city}
+            </option> // assuming 'id' and 'name' fields exist
+          ))}
+        </select>
+        {formik.touched.city && formik.errors.city ? (
+          <div className='fv-plugins-message-container'>
+            <div className='fv-help-block'>{formik.errors.city}</div>
+          </div>
+        ) : null}
+      </div>
+
       {/* begin::Form group Password */}
       <div className='fv-row mb-8' data-kt-password-meter='true'>
         <div className='mb-1'>
-          <label className='form-label fw-bolder text-dark fs-6'>Password</label>
+          <label className='form-label fw-bolder text-dark fs-6'>
+            {' '}
+            {intl.formatMessage({id: 'AUTH.INPUT.PASSWORD'})}
+          </label>
           <div className='position-relative mb-3'>
             <input
               type='password'
-              placeholder='Password'
+              placeholder={intl.formatMessage({id: 'AUTH.INPUT.PASSWORD'})}
               autoComplete='off'
               {...formik.getFieldProps('password')}
               className={clsx(
@@ -271,14 +567,12 @@ export function Registration() {
           </div>
           {/* end::Meter */}
         </div>
-        <div className='text-muted'>
-          Use 8 or more characters with a mix of letters, numbers & symbols.
-        </div>
+        <div className='text-muted'>{intl.formatMessage({id: 'AUTH.INPUT.HELPER'})}</div>
       </div>
       {/* end::Form group */}
 
       {/* begin::Form group Confirm password */}
-      <div className='fv-row mb-5'>
+      {/* <div className='fv-row mb-5'>
         <label className='form-label fw-bolder text-dark fs-6'>Confirm Password</label>
         <input
           type='password'
@@ -302,11 +596,11 @@ export function Registration() {
             </div>
           </div>
         )}
-      </div>
+      </div> */}
       {/* end::Form group */}
 
       {/* begin::Form group */}
-      <div className='fv-row mb-8'>
+      {/* <div className='fv-row mb-8'>
         <label className='form-check form-check-inline' htmlFor='kt_login_toc_agree'>
           <input
             className='form-check-input'
@@ -333,7 +627,7 @@ export function Registration() {
             </div>
           </div>
         )}
-      </div>
+      </div> */}
       {/* end::Form group */}
 
       {/* begin::Form group */}
@@ -342,12 +636,18 @@ export function Registration() {
           type='submit'
           id='kt_sign_up_submit'
           className='btn btn-lg btn-primary w-100 mb-5'
-          disabled={formik.isSubmitting || !formik.isValid || !formik.values.acceptTerms}
+          disabled={formik.isSubmitting || !formik.isValid /*|| !formik.values.acceptTerms*/}
         >
-          {!loading && <span className='indicator-label'>Submit</span>}
+          {!loading && (
+            <span className='indicator-label'>
+              {' '}
+              {intl.formatMessage({id: 'AUTH.BOTTUN.SUBMIT'})}
+            </span>
+          )}
           {loading && (
             <span className='indicator-progress' style={{display: 'block'}}>
-              Please wait...{' '}
+              {intl.formatMessage({id: 'AUTH.BOTTUN.LOADING'})}
+
               <span className='spinner-border spinner-border-sm align-middle ms-2'></span>
             </span>
           )}
@@ -358,7 +658,7 @@ export function Registration() {
             id='kt_login_signup_form_cancel_button'
             className='btn btn-lg btn-light-primary w-100 mb-5'
           >
-            Cancel
+            {intl.formatMessage({id: 'AUTH.BOTTUN.CANCEL'})}
           </button>
         </Link>
       </div>

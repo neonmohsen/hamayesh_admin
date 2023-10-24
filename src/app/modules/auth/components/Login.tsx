@@ -94,14 +94,6 @@ export function Login() {
       </div>
       {/* begin::Heading */}
 
-      {/* begin::Login options */}
-
-      {/* end::Login options */}
-
-      {/* begin::Separator */}
-
-      {/* end::Separator */}
-
       {formik.status && (
         <div className='mb-lg-15 alert alert-danger'>
           <div className='alert-text font-weight-bold'>{formik.status}</div>
@@ -194,7 +186,7 @@ export function Login() {
           )}
           {loading && (
             <span className='indicator-progress' style={{display: 'block'}}>
-              Please wait...
+              {intl.formatMessage({id: 'AUTH.BOTTUN.LOADING'})}
               <span className='spinner-border spinner-border-sm align-middle ms-2'></span>
             </span>
           )}

@@ -9,12 +9,11 @@ import {
   SetStateAction,
 } from 'react'
 import {LayoutSplashScreen} from '../../../../_metronic/layout/core'
-import {AuthModel, UserModel} from './_models'
+import {UserModel} from './_models'
 import * as authHelper from './AuthHelpers'
 import {getUserByToken, LOGOUT_URL} from './_requests'
 import {WithChildren} from '../../../../_metronic/helpers'
 import axios from 'axios'
-
 type AuthContextProps = {
   auth: any
   saveAuth: (auth: any) => void
@@ -40,6 +39,7 @@ const useAuth = () => {
 const AuthProvider: FC<WithChildren> = ({children}) => {
   const [auth, setAuth] = useState<any>(authHelper.getAuth())
   const [currentUser, setCurrentUser] = useState<UserModel | undefined>()
+
   const saveAuth = (auth: any) => {
     setAuth(auth)
     if (auth) {
@@ -66,7 +66,15 @@ const AuthProvider: FC<WithChildren> = ({children}) => {
   }
 
   return (
-    <AuthContext.Provider value={{auth, saveAuth, currentUser, setCurrentUser, logout}}>
+    <AuthContext.Provider
+      value={{
+        auth,
+        saveAuth,
+        currentUser,
+        setCurrentUser,
+        logout,
+      }}
+    >
       {children}
     </AuthContext.Provider>
   )
