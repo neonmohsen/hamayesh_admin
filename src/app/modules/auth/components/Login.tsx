@@ -2,7 +2,7 @@
 import {useState} from 'react'
 import * as Yup from 'yup'
 import clsx from 'clsx'
-import {Link} from 'react-router-dom'
+import {Link, useNavigate} from 'react-router-dom'
 import {useFormik} from 'formik'
 import {getUserByToken, login} from '../core/_requests'
 import {isCustomError, toAbsoluteUrl} from '../../../../_metronic/helpers'
@@ -34,6 +34,7 @@ const initialValues = {
 
 export function Login() {
   const intl = useIntl()
+  const navigate = useNavigate()
 
   const [loading, setLoading] = useState(false)
   const {saveAuth, setCurrentUser} = useAuth()
@@ -47,7 +48,14 @@ export function Login() {
         const {data: auth} = await login(values.email, values.password)
         saveAuth(auth.data)
         const {data: user} = await getUserByToken(auth.data.api_token)
+
         setCurrentUser(user.data)
+        const emailVerifiedAt = user.data.emailVerifiedAt
+        if (!emailVerifiedAt || isNaN(new Date(emailVerifiedAt).getTime())) {
+          // Redirect to the email verification page if the condition is true
+          navigate('/verify-email', {state: {emailSent: true}})
+          return // Important to avoid running subsequent code
+        }
       } catch (error) {
         console.error(error)
         saveAuth(undefined)

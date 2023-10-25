@@ -11,6 +11,10 @@ export const REGISTER_URL = `${API_URL}/auth/register`
 export const REQUEST_PASSWORD_URL = `${API_URL}/auth/forget-password`
 export const RESET_PASSWORD_URL = `${API_URL}/auth/reset-password`
 
+export const UPLOAD_URL = `${API_URL}/upload`
+export const VERIFY_CODE = `${API_URL}/auth/email-verified-send`
+export const VERIFY_EMAIL = `${API_URL}/auth/email-verified-check`
+
 export const STATES_URL = `${API_URL}/states`
 export const getCitiesUrl = (stateId) => `${API_URL}/states/${stateId}/cities`
 
@@ -57,34 +61,49 @@ export function register(
 
 // Server should return object => { result: boolean } (Is Email in DB)
 export function requestPassword(email: string) {
-  return axios.post<{result: boolean}>(
-    REQUEST_PASSWORD_URL,
-    {
-      email,
+  return axios.post<{result: boolean}>(REQUEST_PASSWORD_URL, {
+    email,
+  })
+}
+
+export function profileImage(profile: string) {
+  // Create a FormData object
+  const formData = new FormData()
+
+  // Append the file to the 'profile' field. The 'profile' field here is the name
+  // expected by your server. If your server expects a different field name, replace 'profile'
+  // with the correct field name.
+  formData.append('profile', profile)
+
+  // Send the request
+  return axios.post(UPLOAD_URL, formData, {
+    headers: {
+      'Content-Type': 'multipart/form-data', // This content type is crucial for file uploads
     },
-    {
-      withCredentials: true, // This is important
-    }
-  )
+  })
 }
 
 export function restPassword(token: string, password: string, passwordConfirmation: string) {
-  return axios.post<{result: boolean}>(
-    RESET_PASSWORD_URL,
-    {
-      token,
-      password,
-      passwordConfirmation,
-    },
-    {
-      withCredentials: true, // This is important
-    }
-  )
+  return axios.post<{result: boolean}>(RESET_PASSWORD_URL, {
+    token,
+    password,
+    passwordConfirmation,
+  })
 }
 
 export function getUserByToken(token: string) {
   return axios.post(GET_USER_BY_ACCESSTOKEN_URL, {
     api_token: token,
+  })
+}
+
+export function sendVerifyCode() {
+  return axios.post(VERIFY_CODE)
+}
+
+export function verifyEmail(token: string) {
+  return axios.post(VERIFY_EMAIL, {
+    token,
   })
 }
 

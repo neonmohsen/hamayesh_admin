@@ -1,3 +1,4 @@
+import {navigateTo} from '../../../../_metronic/helpers/History'
 import {AuthModel} from './_models'
 
 const AUTH_LOCAL_STORAGE_KEY = 'kt-auth-react-v'
@@ -22,7 +23,7 @@ const getAuth = (): AuthModel | undefined => {
   }
 }
 
-const setAuth = (auth: AuthModel) => {
+const setAuth = (auth: any) => {
   if (!localStorage) {
     return
   }
@@ -49,6 +50,7 @@ const removeAuth = () => {
 
 export function setupAxios(axios: any) {
   axios.defaults.headers.Accept = 'application/json'
+  axios.defaults.headers.common['Accept-Language'] = 'fa'
   axios.interceptors.request.use(
     (config: {headers: {Authorization: string}}) => {
       const auth = getAuth()
@@ -59,6 +61,28 @@ export function setupAxios(axios: any) {
       return config
     },
     (err: any) => Promise.reject(err)
+  )
+
+  // Response interceptor
+  axios.interceptors.response.use(
+    (response) => {
+      // Any status code that lies within the range of 2xx will cause this function to trigger
+      // Do something with response data
+      return response
+    },
+    (error) => {
+      // The request was made and the server responded with a status code
+      // that falls out of the range of 2xx
+
+      // You can check for specific status codes here if necessary
+      if (error.response.status === 415) {
+        // Handle specific error code (like 415)
+        navigateTo('/verify-email', {emailSent: true})
+      }
+
+      // Important: Make sure to return the error, so the calling function knows it was an error.
+      return Promise.reject(error)
+    }
   )
 }
 

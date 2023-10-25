@@ -14,6 +14,7 @@ import * as authHelper from './AuthHelpers'
 import {getUserByToken, LOGOUT_URL} from './_requests'
 import {WithChildren} from '../../../../_metronic/helpers'
 import axios from 'axios'
+import {useNavigate} from 'react-router-dom'
 type AuthContextProps = {
   auth: any
   saveAuth: (auth: any) => void
@@ -57,8 +58,9 @@ const AuthProvider: FC<WithChildren> = ({children}) => {
         // headers: { 'Authorization': `Bearer ${auth?.data.api_token}` },
       })
     } catch (error) {
+      saveAuth(undefined)
+      setCurrentUser(undefined)
       // Handle logout error, e.g., by logging or displaying a message to the user
-      console.error('Server logout error', error)
     }
 
     saveAuth(undefined)
@@ -84,6 +86,8 @@ const AuthInit: FC<WithChildren> = ({children}) => {
   const {auth, logout, setCurrentUser} = useAuth()
   const didRequest = useRef(false)
   const [showSplashScreen, setShowSplashScreen] = useState(true)
+
+  const navigate = useNavigate()
   // We should request user by authToken (IN OUR EXAMPLE IT'S API_TOKEN) before rendering the application
   useEffect(() => {
     const requestUser = async (apiToken: string) => {
@@ -92,6 +96,14 @@ const AuthInit: FC<WithChildren> = ({children}) => {
           const {data} = await getUserByToken(apiToken)
           if (data) {
             setCurrentUser(data.data)
+
+            // Check if 'emailVerifiedAt' is null or not a valid date
+            const emailVerifiedAt = data.data.emailVerifiedAt
+            if (!emailVerifiedAt || isNaN(new Date(emailVerifiedAt).getTime())) {
+              // Redirect to the email verification page if the condition is true
+              navigate('/verify-email', {state: {emailSent: true}})
+              return // Important to avoid running subsequent code
+            }
           }
         }
       } catch (error) {

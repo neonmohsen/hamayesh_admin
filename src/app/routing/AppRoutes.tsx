@@ -11,6 +11,8 @@ import {PrivateRoutes} from './PrivateRoutes'
 import {ErrorsPage} from '../modules/errors/ErrorsPage'
 import {Logout, AuthPage, useAuth} from '../modules/auth'
 import {App} from '../App'
+import {AuthLayout} from '../modules/auth/AuthLayout'
+import VerifyEmailWrapper from '../modules/auth/components/VerifyEmailWrapper'
 
 /**
  * Base URL of the website.
@@ -27,6 +29,11 @@ const AppRoutes: FC = () => {
         <Route element={<App />}>
           <Route path='error/*' element={<ErrorsPage />} />
           <Route path='logout' element={<Logout />} />
+          <Route element={<AuthLayout />}>
+            {/* Here we use the wrapper instead of the "VerifyEmail" component directly */}
+            <Route path='verify-email' element={<VerifyEmailWrapper />} />
+          </Route>
+
           {currentUser ? (
             <>
               <Route path='/*' element={<PrivateRoutes />} />

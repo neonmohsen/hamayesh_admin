@@ -45,8 +45,8 @@
   "AUTH.FORGOT.DESC": "ایمیل خود را وارد کنید تا رمز عبور خود را بازنشانی کنید",
   "AUTH.FORGOT.SUCCESS": "حساب شما با موفقیت بازنشانی شده است.",
   "AUTH.REGISTER.TITLE": "ثبت نام",
+  "AUTH.VERIFYEMAIL.TITLE": "تایید ایمیل",
   "AUTH.FORGET.TITLE": "فراموشی رمز عبور",
-
   "AUTH.REGISTER.DESC": "جزئیات خود را وارد کنید تا حساب کاربری خود را ایجاد کنید",
   "AUTH.REGISTER.SUCCESS": "حساب کاربری شما با موفقیت ثبت شده است.",
   "AUTH.INPUT.EMAIL": "ایمیل",
@@ -63,16 +63,19 @@
   "AUTH.INPUT.GENDER": "جنسیت",
   "AUTH.INPUT.MALE": "مرد",
   "AUTH.INPUT.FEMALE": "زن",
-
+  "AUTH.INPUT.CODEHELPER": "ارسال مجدد کد ",
   "AUTH.INPUT.STATE": "استان",
   "AUTH.INPUT.CITY": "شهر",
-  "AUTH.BOTTUN.SUBMIT": "ثبت نام",
+  "AUTH.BOTTUN.SUBMIT": "تایید",
+
   "AUTH.BOTTUN.CANCEL": "لغو",
 
   "AUTH.BOTTUN.LOADING": "در حال انجام ...",
   "AUTH.INPUT.CONFIRM_PASSWORD": "تأیید رمز عبور",
   "AUTH.INPUT.HELPER": "از 8 یا بیشتر کاراکتر با ترکیبی از حروف، اعداد و نمادها استفاده کنید.",
   "AUTH.INPUT.USERNAME": "نام کاربری",
+  "AUTH.INPUT.CODE": "کد تایید",
+
   "AUTH.VALIDATION.INVALID": "{name} معتبر نیست",
   "AUTH.VALIDATION.REQUIRED": "{name} اجباری است",
   "AUTH.VALIDATION.MIN_LENGTH": "حداقل طول {name} {min} کاراکتر است",

@@ -4,7 +4,7 @@ import {useState, useEffect} from 'react'
 import {useFormik} from 'formik'
 import * as Yup from 'yup'
 import clsx from 'clsx'
-import {fetchCities, fetchStates, getUserByToken, register} from '../core/_requests'
+import {fetchCities, fetchStates, getUserByToken, profileImage, register} from '../core/_requests'
 import {Link} from 'react-router-dom'
 import {PasswordMeterComponent} from '../../../../_metronic/assets/ts/components'
 import {useAuth} from '../core/Auth'
@@ -32,6 +32,35 @@ const initialValues = {
 
 export function Registration() {
   const intl = useIntl()
+
+  const handleImageChange = async (event) => {
+    const file = event.currentTarget.files[0]
+    if (!file) return
+
+    try {
+      const response = await profileImage(file)
+
+      if (response.data.status === 'success') {
+        const imagePath = response.data.data.profile[0].path
+        formik.setFieldValue('image', imagePath)
+      } else {
+        // If the request was technically successful, but the application
+        // returned an error (e.g., file not supported, file too large, etc.)
+        throw new Error(response.data.message || 'Error uploading file.')
+      }
+    } catch (error: any) {
+      // Here you handle any errors that occurred during the request
+      console.error('Error during image upload:', error)
+
+      const errorMessage = error.response ? error.response.data.message : error.message
+
+      // Set formik field error for image field
+      formik.setFieldError('image', errorMessage)
+
+      // If you have a general 'status' field for displaying global form messages, you can use this too
+      formik.setStatus('Failed to upload image.')
+    }
+  }
 
   const registrationSchema = Yup.object().shape({
     firstname: Yup.string()
@@ -568,6 +597,17 @@ export function Registration() {
           {/* end::Meter */}
         </div>
         <div className='text-muted'>{intl.formatMessage({id: 'AUTH.INPUT.HELPER'})}</div>
+      </div>
+
+      <div className='fv-row mb-8'>
+        <label className='form-label fw-bolder text-dark fs-6'>Image</label>
+        <input
+          type='file'
+          accept='image/*'
+          className='form-control bg-transparent'
+          onChange={handleImageChange}
+        />
+        {/* Display path after image upload */}
       </div>
       {/* end::Form group */}
 
