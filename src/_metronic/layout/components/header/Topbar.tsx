@@ -9,6 +9,7 @@ import {
   Search,
   ThemeModeSwitcher,
 } from '../../../partials'
+import {useAuth} from '../../../../app/modules/auth'
 
 const toolbarButtonMarginClass = 'ms-1 ms-lg-3',
   toolbarButtonHeightClass = 'btn-active-light-primary btn-custom w-30px h-30px w-md-40px h-md-40p',
@@ -16,6 +17,8 @@ const toolbarButtonMarginClass = 'ms-1 ms-lg-3',
   toolbarButtonIconSizeClass = 'fs-1'
 
 const Topbar: FC = () => {
+  const {currentUser} = useAuth()
+
   return (
     <div className='d-flex align-items-stretch flex-shrink-0'>
       <div className='topbar d-flex align-items-stretch flex-shrink-0'>
@@ -114,7 +117,7 @@ const Topbar: FC = () => {
           >
             <img
               className='h-30px w-30px rounded'
-              src={toAbsoluteUrl('/media/avatars/300-2.jpg')}
+              src={toAbsoluteUrl(currentUser?.profileImage || '/media/avatars/300-2.jpg')}
               alt='metronic'
             />
           </div>

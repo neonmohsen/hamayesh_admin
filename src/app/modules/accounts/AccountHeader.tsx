@@ -2,11 +2,16 @@
 import React from 'react'
 import {KTIcon, toAbsoluteUrl} from '../../../_metronic/helpers'
 import {Link} from 'react-router-dom'
-import {Dropdown1} from '../../../_metronic/partials'
 import {useLocation} from 'react-router'
+import {useAuth} from '../auth'
+import {useIntl} from 'react-intl'
 
 const AccountHeader: React.FC = () => {
   const location = useLocation()
+  const {currentUser} = useAuth()
+  const intl = useIntl()
+
+  console.log(currentUser)
 
   return (
     <div className='card mb-5 mb-xl-10'>
@@ -14,8 +19,10 @@ const AccountHeader: React.FC = () => {
         <div className='d-flex flex-wrap flex-sm-nowrap mb-3'>
           <div className='me-7 mb-4'>
             <div className='symbol symbol-100px symbol-lg-160px symbol-fixed position-relative'>
-              <img src={toAbsoluteUrl('/media/avatars/300-1.jpg')} alt='Metronic' />
-              <div className='position-absolute translate-middle bottom-0 start-100 mb-6 bg-success rounded-circle border border-4 border-white h-20px w-20px'></div>
+              <img
+                src={toAbsoluteUrl(currentUser?.profileImage || '/media/avatars/300-1.jpg')}
+                alt='Metronic'
+              />
             </div>
           </div>
 
@@ -24,18 +31,10 @@ const AccountHeader: React.FC = () => {
               <div className='d-flex flex-column'>
                 <div className='d-flex align-items-center mb-2'>
                   <a href='#' className='text-gray-800 text-hover-primary fs-2 fw-bolder me-1'>
-                    Max Smith
+                    {currentUser?.firstName} {currentUser?.lastName}
                   </a>
                   <a href='#'>
                     <KTIcon iconName='verify' className='fs-1 text-primary' />
-                  </a>
-                  <a
-                    href='#'
-                    className='btn btn-sm btn-light-success fw-bolder ms-2 fs-8 py-1 px-3'
-                    data-bs-toggle='modal'
-                    data-bs-target='#kt_modal_upgrade_plan'
-                  >
-                    Upgrade to Pro
                   </a>
                 </div>
 
@@ -45,26 +44,26 @@ const AccountHeader: React.FC = () => {
                     className='d-flex align-items-center text-gray-400 text-hover-primary me-5 mb-2'
                   >
                     <KTIcon iconName='profile-circle' className='fs-4 me-1' />
-                    Developer
+                    {currentUser?.job}
                   </a>
                   <a
                     href='#'
                     className='d-flex align-items-center text-gray-400 text-hover-primary me-5 mb-2'
                   >
                     <KTIcon iconName='geolocation' className='fs-4 me-1' />
-                    SF, Bay Area
+                    {currentUser?.state}, {currentUser?.city}
                   </a>
                   <a
                     href='#'
                     className='d-flex align-items-center text-gray-400 text-hover-primary mb-2'
                   >
                     <KTIcon iconName='sms' className='fs-4 me-1' />
-                    max@kt.com
+                    {currentUser?.email}
                   </a>
                 </div>
               </div>
 
-              <div className='d-flex my-4'>
+              {/* <div className='d-flex my-4'>
                 <a href='#' className='btn btn-sm btn-light me-2' id='kt_user_follow_button'>
                   <KTIcon iconName='check' className='fs-3 d-none' />
 
@@ -93,10 +92,10 @@ const AccountHeader: React.FC = () => {
                   </button>
                   <Dropdown1 />
                 </div>
-              </div>
+              </div> */}
             </div>
 
-            <div className='d-flex flex-wrap flex-stack'>
+            {/* <div className='d-flex flex-wrap flex-stack'>
               <div className='d-flex flex-column flex-grow-1 pe-8'>
                 <div className='d-flex flex-wrap'>
                   <div className='border border-gray-300 border-dashed rounded min-w-125px py-3 px-4 me-6 mb-3'>
@@ -141,7 +140,7 @@ const AccountHeader: React.FC = () => {
                   ></div>
                 </div>
               </div>
-            </div>
+            </div> */}
           </div>
         </div>
 
@@ -155,7 +154,7 @@ const AccountHeader: React.FC = () => {
                 }
                 to='/crafted/account/overview'
               >
-                Overview
+                {intl.formatMessage({id: 'USER.OVERVIEW.TITLE'})}
               </Link>
             </li>
             <li className='nav-item'>
@@ -166,7 +165,7 @@ const AccountHeader: React.FC = () => {
                 }
                 to='/crafted/account/settings'
               >
-                Settings
+                {intl.formatMessage({id: 'USER.SETTING.TITLE'})}
               </Link>
             </li>
           </ul>

@@ -43,25 +43,26 @@ export interface UserSocialNetworksModel {
 }
 
 export interface UserModel {
-  id: number
-  username: string
-  password: string | undefined
-  email: string
-  firstName: string
-  lastName: string
-  fullname?: string
-  occupation?: string
-  companyName?: string
-  phone?: string
+  id?: number
+  password?: string | undefined
+  email?: string
+  firstName?: string
+  lastName?: string
+  job?: string
+  phoneNumber?: string
   roles?: Array<number>
-  pic?: string
-  language?: 'en' | 'de' | 'es' | 'fr' | 'ja' | 'zh' | 'ru' | 'fa'
-  timeZone?: string
   emailSettings?: UserEmailSettingsModel
   auth?: AuthModel
-  communication?: UserCommunicationModel
   address?: UserAddressModel
+  state?: string
+  city?: string
   socialNetworks?: UserSocialNetworksModel
+  profileImage?: string
+  institute?: string
+  study_field?: string
+  gender?: string
+  national_id?: string
+  degree?: string
 }
 // This should reflect the structure of your state/city data
 export interface ILocation {

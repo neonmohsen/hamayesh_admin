@@ -27,6 +27,7 @@ const initialValues = {
   state: '',
   city: '',
   job: '',
+  profile: '',
   // acceptTerms: false,
 }
 
@@ -42,7 +43,7 @@ export function Registration() {
 
       if (response.data.status === 'success') {
         const imagePath = response.data.data.profile[0].path
-        formik.setFieldValue('image', imagePath)
+        formik.setFieldValue('profile', `${process.env.REACT_APP_BASE_URL}/${imagePath}`)
       } else {
         // If the request was technically successful, but the application
         // returned an error (e.g., file not supported, file too large, etc.)
@@ -55,7 +56,7 @@ export function Registration() {
       const errorMessage = error.response ? error.response.data.message : error.message
 
       // Set formik field error for image field
-      formik.setFieldError('image', errorMessage)
+      formik.setFieldError('profile', errorMessage)
 
       // If you have a general 'status' field for displaying global form messages, you can use this too
       formik.setStatus('Failed to upload image.')
@@ -128,7 +129,8 @@ export function Registration() {
           values.institute,
           values.state,
           values.city,
-          values.job
+          values.job,
+          values.profile
         )
         saveAuth(auth.data)
         const {data: user} = await getUserByToken(auth.data.api_token)

@@ -40,7 +40,8 @@ export function register(
   institute,
   state,
   city,
-  job
+  job,
+  profile
 ) {
   return axios.post(REGISTER_URL, {
     email,
@@ -56,6 +57,7 @@ export function register(
     state,
     city,
     job,
+    profileImage: profile,
   })
 }
 

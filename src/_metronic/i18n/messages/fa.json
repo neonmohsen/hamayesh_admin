@@ -75,6 +75,8 @@
   "AUTH.INPUT.HELPER": "از 8 یا بیشتر کاراکتر با ترکیبی از حروف، اعداد و نمادها استفاده کنید.",
   "AUTH.INPUT.USERNAME": "نام کاربری",
   "AUTH.INPUT.CODE": "کد تایید",
+  "AUTH.INPUT.PROFILEDETAIL": "اطلاعات کاربری",
+  "AUTH.INPUT.IMAGE": "آواتار",
 
   "AUTH.VALIDATION.INVALID": "{name} معتبر نیست",
   "AUTH.VALIDATION.REQUIRED": "{name} اجباری است",
@@ -117,5 +119,7 @@
   "ECOMMERCE.CUSTOMERS.UPDATE_STATUS.TITLE": "وضعیت مشتریان انتخاب شده به روز شده است",
   "ECOMMERCE.CUSTOMERS.UPDATE_STATUS.MESSAGE": "وضعیت مشتریان انتخاب شده با موفقیت به روز شده است",
   "ECOMMERCE.CUSTOMERS.EDIT.UPDATE_MESSAGE": "مشتری به روز شده است",
-  "ECOMMERCE.CUSTOMERS.EDIT.ADD_MESSAGE": "مشتری ایجاد شده است"
+  "ECOMMERCE.CUSTOMERS.EDIT.ADD_MESSAGE": "مشتری ایجاد شده است",
+  "USER.OVERVIEW.TITLE": "مشاهده اطلاعات",
+  "USER.SETTING.TITLE": "ویرایش اطلاعات"
 }
