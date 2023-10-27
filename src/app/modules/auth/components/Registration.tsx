@@ -43,7 +43,7 @@ export function Registration() {
 
       if (response.data.status === 'success') {
         const imagePath = response.data.data.profile[0].path
-        formik.setFieldValue('profile', `${process.env.REACT_APP_BASE_URL}/${imagePath}`)
+        formik.setFieldValue('profile', imagePath)
       } else {
         // If the request was technically successful, but the application
         // returned an error (e.g., file not supported, file too large, etc.)
@@ -602,7 +602,9 @@ export function Registration() {
       </div>
 
       <div className='fv-row mb-8'>
-        <label className='form-label fw-bolder text-dark fs-6'>Image</label>
+        <label className='form-label fw-bolder text-dark fs-6'>
+          {intl.formatMessage({id: 'AUTH.INPUT.IMAGE'})}
+        </label>
         <input
           type='file'
           accept='image/*'

@@ -20,7 +20,11 @@ const AccountHeader: React.FC = () => {
           <div className='me-7 mb-4'>
             <div className='symbol symbol-100px symbol-lg-160px symbol-fixed position-relative'>
               <img
-                src={toAbsoluteUrl(currentUser?.profileImage || '/media/avatars/300-1.jpg')}
+                src={toAbsoluteUrl(
+                  currentUser?.profileImage
+                    ? `${process.env.REACT_APP_BASE_URL}/${currentUser?.profileImage}`
+                    : '/media/avatars/blank.png'
+                )}
                 alt='Metronic'
               />
             </div>

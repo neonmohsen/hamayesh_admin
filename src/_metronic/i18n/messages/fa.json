@@ -77,6 +77,7 @@
   "AUTH.INPUT.CODE": "کد تایید",
   "AUTH.INPUT.PROFILEDETAIL": "اطلاعات کاربری",
   "AUTH.INPUT.IMAGE": "آواتار",
+  "AUTH.INPUT.UPLOAD": "آپلود عکس",
 
   "AUTH.VALIDATION.INVALID": "{name} معتبر نیست",
   "AUTH.VALIDATION.REQUIRED": "{name} اجباری است",
@@ -121,5 +122,8 @@
   "ECOMMERCE.CUSTOMERS.EDIT.UPDATE_MESSAGE": "مشتری به روز شده است",
   "ECOMMERCE.CUSTOMERS.EDIT.ADD_MESSAGE": "مشتری ایجاد شده است",
   "USER.OVERVIEW.TITLE": "مشاهده اطلاعات",
-  "USER.SETTING.TITLE": "ویرایش اطلاعات"
+  "USER.SETTING.TITLE": "ویرایش اطلاعات",
+  "AUTH.NOTICE.EMAIL_1": "نیاز به توجه شما داریم!",
+  "AUTH.NOTICE.EMAIL_2": "،ایمیل شما رد شده است. برای شروع استفاده از ابزارها",
+  "AUTH.NOTICE.EMAIL_3": "لطفاً ایمیل خود را تأیید کنید."
 }

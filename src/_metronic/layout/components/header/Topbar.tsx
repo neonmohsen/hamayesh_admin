@@ -117,7 +117,11 @@ const Topbar: FC = () => {
           >
             <img
               className='h-30px w-30px rounded'
-              src={toAbsoluteUrl(currentUser?.profileImage || '/media/avatars/300-2.jpg')}
+              src={toAbsoluteUrl(
+                currentUser?.profileImage
+                  ? `${process.env.REACT_APP_BASE_URL}/${currentUser?.profileImage}`
+                  : '/media/avatars/blank.png'
+              )}
               alt='metronic'
             />
           </div>

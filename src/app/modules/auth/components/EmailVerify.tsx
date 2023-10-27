@@ -5,6 +5,7 @@ import {Link, useLocation, useNavigate} from 'react-router-dom'
 import {useFormik} from 'formik'
 import {sendVerifyCode, verifyEmail} from '../core/_requests'
 import {useIntl} from 'react-intl'
+import {useAuth} from '../core/Auth'
 
 const initialValues = {
   token: '',
@@ -30,6 +31,7 @@ export function VerifyEmail() {
   const [hasErrors, setHasErrors] = useState<string | undefined>(undefined)
   const [exTime, setExTime] = useState<number | null>(null)
   const [timeRemaining, setTimeRemaining] = useState<number>(0)
+  const {setCurrentUser} = useAuth()
 
   // This effect happens when the component is mounted
   useEffect(() => {
@@ -80,7 +82,8 @@ export function VerifyEmail() {
       setLoading(true)
       setHasErrors(undefined)
       verifyEmail(values.token)
-        .then(({data: {result}}) => {
+        .then((res) => {
+          setCurrentUser(res.data.data)
           setHasErrors('')
           setLoading(false)
           navigate('/auth') // Or wherever you wish to redirect users to

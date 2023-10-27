@@ -1,5 +1,6 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import React from 'react'
+import {useIntl} from 'react-intl'
 import {Link} from 'react-router-dom'
 import {KTIcon} from '../../../../_metronic/helpers'
 import {
@@ -8,41 +9,64 @@ import {
   TablesWidget1,
   TablesWidget5,
 } from '../../../../_metronic/partials/widgets'
+import {useAuth} from '../../auth'
 
 export function Overview() {
+  const intl = useIntl()
+  const {currentUser} = useAuth()
+
   return (
     <>
       <div className='card mb-5 mb-xl-10' id='kt_profile_details_view'>
         <div className='card-header cursor-pointer'>
           <div className='card-title m-0'>
-            <h3 className='fw-bolder m-0'>Profile Details</h3>
+            <h3 className='fw-bolder m-0'>
+              {intl.formatMessage({id: 'AUTH.INPUT.PROFILEDETAIL'})}
+            </h3>
           </div>
 
           <Link to='/crafted/account/settings' className='btn btn-primary align-self-center'>
-            Edit Profile
+            {intl.formatMessage({id: 'USER.SETTING.TITLE'})}{' '}
           </Link>
         </div>
 
         <div className='card-body p-9'>
           <div className='row mb-7'>
-            <label className='col-lg-4 fw-bold text-muted'>Full Name</label>
+            <label className='col-lg-4 fw-bold text-muted'>
+              {' '}
+              {intl.formatMessage({id: 'AUTH.INPUT.FULLNAME'})}
+            </label>
 
             <div className='col-lg-8'>
-              <span className='fw-bolder fs-6 text-dark'>Max Smith</span>
-            </div>
-          </div>
-
-          <div className='row mb-7'>
-            <label className='col-lg-4 fw-bold text-muted'>Company</label>
-
-            <div className='col-lg-8 fv-row'>
-              <span className='fw-bold fs-6'>Keenthemes</span>
+              <span className='fw-bolder fs-6 text-dark'>
+                {currentUser?.firstName} {currentUser?.lastName}{' '}
+              </span>
             </div>
           </div>
 
           <div className='row mb-7'>
             <label className='col-lg-4 fw-bold text-muted'>
-              Contact Phone
+              {' '}
+              {intl.formatMessage({id: 'AUTH.INPUT.JOB'})}
+            </label>
+
+            <div className='col-lg-8 fv-row'>
+              <span className='fw-bold fs-6'>{currentUser?.job}</span>
+            </div>
+          </div>
+          <div className='row mb-7'>
+            <label className='col-lg-4 fw-bold text-muted'>
+              {' '}
+              {intl.formatMessage({id: 'AUTH.INPUT.STUDYFIELD'})}
+            </label>
+
+            <div className='col-lg-8 fv-row'>
+              <span className='fw-bold fs-6'>{currentUser?.study_field}</span>
+            </div>
+          </div>
+          <div className='row mb-7'>
+            <label className='col-lg-4 fw-bold text-muted'>
+              {intl.formatMessage({id: 'AUTH.INPUT.EMAIL'})}
               <i
                 className='fas fa-exclamation-circle ms-1 fs-7'
                 data-bs-toggle='tooltip'
@@ -51,72 +75,49 @@ export function Overview() {
             </label>
 
             <div className='col-lg-8 d-flex align-items-center'>
-              <span className='fw-bolder fs-6 me-2'>044 3276 454 935</span>
-
-              <span className='badge badge-success'>Verified</span>
+              <span className='fw-bolder fs-6 me-2'>{currentUser?.email}</span>
+              {currentUser?.emailVerifiedAt && (
+                <span className='badge badge-success'>Verified</span>
+              )}
             </div>
           </div>
 
           <div className='row mb-7'>
-            <label className='col-lg-4 fw-bold text-muted'>Company Site</label>
+            <label className='col-lg-4 fw-bold text-muted'>
+              {' '}
+              {intl.formatMessage({id: 'AUTH.INPUT.PHONENUMBER'})}
+            </label>
 
             <div className='col-lg-8'>
               <a href='#' className='fw-bold fs-6 text-dark text-hover-primary'>
-                keenthemes.com
+                {currentUser?.phoneNumber}
               </a>
             </div>
           </div>
 
           <div className='row mb-7'>
             <label className='col-lg-4 fw-bold text-muted'>
-              Country
-              <i
-                className='fas fa-exclamation-circle ms-1 fs-7'
-                data-bs-toggle='tooltip'
-                title='Country of origination'
-              ></i>
+              {intl.formatMessage({id: 'AUTH.INPUT.NATIONALID'})}
             </label>
 
             <div className='col-lg-8'>
-              <span className='fw-bolder fs-6 text-dark'>Germany</span>
+              <span className='fw-bolder fs-6 text-dark'>{currentUser?.national_id}</span>
             </div>
           </div>
 
           <div className='row mb-7'>
-            <label className='col-lg-4 fw-bold text-muted'>Communication</label>
+            <label className='col-lg-4 fw-bold text-muted'>
+              {' '}
+              {intl.formatMessage({id: 'AUTH.INPUT.INSTITUTE'})}
+            </label>
 
             <div className='col-lg-8'>
-              <span className='fw-bolder fs-6 text-dark'>Email, Phone</span>
-            </div>
-          </div>
-
-          <div className='row mb-10'>
-            <label className='col-lg-4 fw-bold text-muted'>Allow Changes</label>
-
-            <div className='col-lg-8'>
-              <span className='fw-bold fs-6'>Yes</span>
-            </div>
-          </div>
-
-          <div className='notice d-flex bg-light-warning rounded border-warning border border-dashed p-6'>
-            <KTIcon iconName='information-5' className='fs-2tx text-warning me-4' />
-            <div className='d-flex flex-stack flex-grow-1'>
-              <div className='fw-bold'>
-                <h4 className='text-gray-800 fw-bolder'>We need your attention!</h4>
-                <div className='fs-6 text-gray-600'>
-                  Your payment was declined. To start using tools, please
-                  <Link className='fw-bolder' to='/crafted/account/settings'>
-                    {' '}
-                    Add Payment Method
-                  </Link>
-                  .
-                </div>
-              </div>
+              <span className='fw-bolder fs-6 text-dark'>{currentUser?.institute}</span>
             </div>
           </div>
         </div>
       </div>
-
+      {/* 
       <div className='row gy-10 gx-xl-10'>
         <div className='col-xl-6'>
           <ChartsWidget1 className='card-xxl-stretch mb-5 mb-xl-10' />
@@ -135,7 +136,7 @@ export function Overview() {
         <div className='col-xl-6'>
           <TablesWidget5 className='card-xxl-stretch mb-5 mb-xl-10' />
         </div>
-      </div>
+      </div> */}
     </>
   )
 }

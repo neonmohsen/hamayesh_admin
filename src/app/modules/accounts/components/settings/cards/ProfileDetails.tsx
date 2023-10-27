@@ -1,11 +1,12 @@
 import React, {useEffect, useState} from 'react'
-import {toAbsoluteUrl} from '../../../../../../_metronic/helpers'
+import {isCustomError, KTIcon, toAbsoluteUrl} from '../../../../../../_metronic/helpers'
 import * as Yup from 'yup'
 import {useFormik} from 'formik'
 import {ILocation, useAuth} from '../../../../auth'
 import {useIntl} from 'react-intl'
 import {updateUser} from '../../../core/_requests'
-import {fetchCities, fetchStates} from '../../../../auth/core/_requests'
+import {fetchCities, fetchStates, profileImage} from '../../../../auth/core/_requests'
+import {Link} from 'react-router-dom'
 
 // const profileDetailsSchema = Yup.object().shape({
 //   fName: Yup.string().required('First name is required'),
@@ -60,11 +61,12 @@ const ProfileDetails: React.FC = () => {
     state: Yup.string().optional(),
     city: Yup.string().optional(),
     job: Yup.string().optional(),
+    profileImage: Yup.string().optional(),
 
     // acceptTerms: Yup.bool().required('You must accept the terms and conditions'),
   })
 
-  const {currentUser} = useAuth()
+  const {currentUser, setCurrentUser} = useAuth()
   const [states, setStates] = useState<ILocation[]>([])
   const [cities, setCities] = useState<ILocation[]>([]) // for storing cities based on selected state
 
@@ -102,7 +104,7 @@ const ProfileDetails: React.FC = () => {
     state: '',
     city: '',
     job: '',
-    profile: '',
+    profileImage: '',
     // acceptTerms: false,
   }
 
@@ -118,20 +120,80 @@ const ProfileDetails: React.FC = () => {
   }
 
   const [loading, setLoading] = useState(false)
+  const [successMessage, setSuccessMessage] = useState('')
+
   const formik = useFormik({
     initialValues: currentUser || initialValues,
     validationSchema: updaetSchema,
-    onSubmit: (values) => {
+    onSubmit: (values, {setSubmitting, setFieldError, setStatus, resetForm}) => {
       setLoading(true)
 
       const changedValues = getChangedValues(formik.initialValues, values)
 
       updateUser(changedValues)
-        .then((res) => {})
-        .catch((error) => {})
-      setLoading(false)
+        .then((res) => {
+          setCurrentUser(res.data.data)
+          setLoading(false)
+          setSubmitting(false)
+
+          // Set the success message
+          setSuccessMessage(res.data.message)
+
+          // Clear any previous status or errors
+          setStatus('')
+          resetForm({values: res.data.data}) // Reset the form with the new data
+        })
+        .catch((error) => {
+          setSubmitting(false)
+          setLoading(false)
+
+          if (isCustomError(error)) {
+            setSuccessMessage('')
+
+            const errorMessage = error.response.data.message
+            setStatus(errorMessage)
+
+            const fieldErrors = error.response.data.errors
+            if (fieldErrors) {
+              Object.keys(fieldErrors).forEach((field) => {
+                setFieldError(field, fieldErrors[field].join(', '))
+              })
+            }
+          } else {
+            setStatus('The registration details are incorrect.')
+          }
+        })
     },
   })
+
+  const handleImageChange = async (event) => {
+    const file = event.currentTarget.files[0]
+    if (!file) return
+
+    try {
+      const response = await profileImage(file)
+
+      if (response.data.status === 'success') {
+        const imagePath = response.data.data.profile[0].path
+        formik.setFieldValue('profileImage', imagePath)
+      } else {
+        // If the request was technically successful, but the application
+        // returned an error (e.g., file not supported, file too large, etc.)
+        throw new Error(response.data.message || 'Error uploading file.')
+      }
+    } catch (error: any) {
+      // Here you handle any errors that occurred during the request
+      console.error('Error during image upload:', error)
+
+      const errorMessage = error.response ? error.response.data.message : error.message
+
+      // Set formik field error for image field
+      formik.setFieldError('profile', errorMessage)
+
+      // If you have a general 'status' field for displaying global form messages, you can use this too
+      formik.setStatus('Failed to upload image.')
+    }
+  }
 
   return (
     <div className='card mb-5 mb-xl-10'>
@@ -151,29 +213,94 @@ const ProfileDetails: React.FC = () => {
       <div id='kt_account_profile_details' className='collapse show'>
         <form onSubmit={formik.handleSubmit} noValidate className='form'>
           <div className='card-body border-top p-9'>
+            {successMessage && (
+              <div className='mb-lg-15 alert alert-success'>
+                <div className='alert-text font-weight-bold'>{successMessage}</div>
+              </div>
+            )}
+
+            {formik.status && (
+              <div className='mb-lg-15 alert alert-danger'>
+                <div className='alert-text font-weight-bold'>{formik.status}</div>
+              </div>
+            )}
             <div className='row mb-6'>
               <label className='col-lg-4 col-form-label fw-bold fs-6'>
                 {intl.formatMessage({id: 'AUTH.INPUT.IMAGE'})}
               </label>
+
               <div className='col-lg-8'>
                 <div
                   className='image-input image-input-outline'
                   data-kt-image-input='true'
+                  style={{position: 'relative', width: '125px', height: '125px'}} // Adjust dimensions as needed
+                >
+                  {/* Image will be positioned absolutely to fill the container */}
+                  <img
+                    className='image-input-wrapper w-125px h-125px'
+                    src={
+                      currentUser?.profileImage
+                        ? `${process.env.REACT_APP_BASE_URL}/${currentUser.profileImage}`
+                        : toAbsoluteUrl('/media/avatars/blank.png')
+                    }
+                    alt='Profile'
+                    style={{
+                      position: 'absolute',
+                      width: '100%',
+                      height: '100%',
+                      objectFit: 'cover', // This will ensure the image covers the container
+                    }}
+                  />
+                </div>
+              </div>
+
+              {/* <div className='col-lg-8'>
+                <div
+                  className='image-input image-input-outline'
+                  data-kt-image-input='true'
                   style={{
-                    backgroundImage: `url(${toAbsoluteUrl(
-                      currentUser?.profileImage || '/media/avatars/blank.png'
-                    )})`,
+                    backgroundImage: `url(${
+                      currentUser?.profileImage
+                        ? `${process.env.REACT_APP_BASE_URL}/${currentUser.profileImage}`
+                        : toAbsoluteUrl('/media/avatars/blank.png')
+                    })`,
                   }}
                 >
                   <div
                     className='image-input-wrapper w-125px h-125px'
                     style={{
-                      backgroundImage: `url(${toAbsoluteUrl(currentUser?.profileImage || '')})`,
+                      backgroundImage: `url(${
+                        currentUser?.profileImage
+                          ? `${process.env.REACT_APP_BASE_URL}/${currentUser.profileImage}`
+                          : toAbsoluteUrl('/media/avatars/blank.png')
+                      })`,
                     }}
                   ></div>
                 </div>
+              </div> */}
+            </div>
+
+            <div className='row mb-6'>
+              <label className='col-lg-4 col-form-label fw-bold fs-6'>
+                {intl.formatMessage({id: 'AUTH.INPUT.UPLOAD'})}
+              </label>
+              <div className='col-lg-8'>
+                <div className='row'>
+                  <div className='col-lg-6 fv-row'>
+                    <input
+                      type='file'
+                      accept='image/*'
+                      className='form-control form-control-lg form-control-solid mb-3 mb-lg-0'
+                      onChange={handleImageChange}
+                    />
+                  </div>
+
+                  <div className='col-lg-6 fv-row'></div>
+                </div>
               </div>
             </div>
+
+            <div className='row mb-6'>{/* Display path after image upload */}</div>
 
             <div className='row mb-6'>
               <label className='col-lg-4 col-form-label required fw-bold fs-6'>
@@ -276,6 +403,38 @@ const ProfileDetails: React.FC = () => {
                 )}
               </div>
             </div>
+            {!currentUser?.emailVerifiedAt && (
+              <div className='row mb-6'>
+                <label className='col-lg-4 col-form-label fw-bold fs-6'></label>
+
+                <div className='col-lg-8 fv-row'>
+                  <div className='notice d-flex bg-light-warning rounded border-warning border border-dashed p-6'>
+                    <KTIcon iconName='information-5' className='fs-2tx text-warning me-4' />
+                    <div className='d-flex flex-stack flex-grow-1'>
+                      <div className='fw-bold'>
+                        <h4 className='text-gray-800 fw-bolder'>
+                          {' '}
+                          {intl.formatMessage({id: 'AUTH.NOTICE.EMAIL_1'})}
+                        </h4>
+                        <div className='fs-6 text-gray-600'>
+                          {intl.formatMessage({id: 'AUTH.NOTICE.EMAIL_2'})}
+                          <Link
+                            className='fw-bolder'
+                            to={{
+                              pathname: '/verify-email',
+                            }}
+                            state={{emailSent: true}}
+                          >
+                            {' '}
+                            {intl.formatMessage({id: 'AUTH.NOTICE.EMAIL_3'})}
+                          </Link>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            )}
 
             <div className='row mb-6'>
               <label className='col-lg-4 col-form-label fw-bold fs-6'>
