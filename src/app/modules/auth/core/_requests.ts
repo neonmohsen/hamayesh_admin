@@ -68,14 +68,14 @@ export function requestPassword(email: string) {
   })
 }
 
-export function profileImage(profile: string) {
+export function profileImage(profile: string, name: string = 'profile') {
   // Create a FormData object
   const formData = new FormData()
 
   // Append the file to the 'profile' field. The 'profile' field here is the name
   // expected by your server. If your server expects a different field name, replace 'profile'
   // with the correct field name.
-  formData.append('profile', profile)
+  formData.append(name, profile)
 
   // Send the request
   return axios.post(UPLOAD_URL, formData, {

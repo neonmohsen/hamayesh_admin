@@ -20,31 +20,24 @@ const usersColumns: ReadonlyArray<Column<User>> = [
     Header: (props) => (
       <UserCustomHeader tableProps={props} title='USER.TABLE.FULLNAME' className='min-w-125px' />
     ),
-    id: 'firstName',
+    id: 'name',
     Cell: ({...props}) => <UserInfoCell user={props.data[props.row.index]} />,
   },
-  {
-    Header: (props) => (
-      <UserCustomHeader tableProps={props} title='USER.TABLE.ROLE' className='min-w-125px' />
-    ),
-    accessor: 'role',
-  },
+
   {
     Header: (props) => (
       <UserCustomHeader tableProps={props} title='USER.TABLE.NATIONALID' className='min-w-125px' />
     ),
-    id: 'national_id',
-    Cell: ({...props}) => (
-      <UserLastLoginCell national_id={props.data[props.row.index].national_id} />
-    ),
+    id: 'link',
+    Cell: ({...props}) => <UserLastLoginCell national_id={props.data[props.row.index].link} />,
   },
   {
     Header: (props) => (
       <UserCustomHeader tableProps={props} title='USER.TABLE.PHONENUMBER' className='min-w-125px' />
     ),
-    id: 'phoneNumber',
+    id: 'supportType',
     Cell: ({...props}) => (
-      <UserTwoStepsCell phoneNumber={props.data[props.row.index].phoneNumber} />
+      <UserTwoStepsCell phoneNumber={props.data[props.row.index].supportType} />
     ),
   },
   {

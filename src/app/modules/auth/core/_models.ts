@@ -50,7 +50,7 @@ export interface UserModel {
   lastName?: string
   job?: string
   phoneNumber?: string
-  roles?: Array<number>
+  role?: string
   emailSettings?: UserEmailSettingsModel
   auth?: AuthModel
   address?: UserAddressModel

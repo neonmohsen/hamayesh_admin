@@ -7,8 +7,13 @@ import {MenuTestPage} from '../pages/MenuTestPage'
 import {getCSSVariableValue} from '../../_metronic/assets/ts/_utils'
 import {WithChildren} from '../../_metronic/helpers'
 import BuilderPageWrapper from '../pages/layout-builder/BuilderPageWrapper'
+import {useAuth} from '../modules/auth'
+import SupporterPage from '../modules/apps/supporter-management/SupporterPage'
+import SpeakerPage from '../modules/apps/speaker-management/SpeakerPage'
 
 const PrivateRoutes = () => {
+  const {currentUser} = useAuth()
+  console.log(currentUser)
   const ProfilePage = lazy(() => import('../modules/profile/ProfilePage'))
   const WizardsPage = lazy(() => import('../modules/wizards/WizardsPage'))
   const AccountPage = lazy(() => import('../modules/accounts/AccountPage'))
@@ -65,14 +70,36 @@ const PrivateRoutes = () => {
             </SuspensedView>
           }
         />
-        <Route
-          path='apps/user-management/*'
-          element={
-            <SuspensedView>
-              <UsersPage />
-            </SuspensedView>
-          }
-        />
+        {(currentUser?.role === 'admin' || currentUser?.role === 'executive') && (
+          <Route
+            path='apps/user-management/*'
+            element={
+              <SuspensedView>
+                <UsersPage />
+              </SuspensedView>
+            }
+          />
+        )}
+        {(currentUser?.role === 'admin' || currentUser?.role === 'executive') && (
+          <Route
+            path='apps/supporter-management/*'
+            element={
+              <SuspensedView>
+                <SupporterPage />
+              </SuspensedView>
+            }
+          />
+        )}
+        {(currentUser?.role === 'admin' || currentUser?.role === 'executive') && (
+          <Route
+            path='apps/speaker-management/*'
+            element={
+              <SuspensedView>
+                <SpeakerPage />
+              </SuspensedView>
+            }
+          />
+        )}
         {/* Page Not Found */}
         <Route path='*' element={<Navigate to='/error/404' />} />
       </Route>
