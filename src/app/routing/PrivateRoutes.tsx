@@ -10,6 +10,7 @@ import BuilderPageWrapper from '../pages/layout-builder/BuilderPageWrapper'
 import {useAuth} from '../modules/auth'
 import SupporterPage from '../modules/apps/supporter-management/SupporterPage'
 import SpeakerPage from '../modules/apps/speaker-management/SpeakerPage'
+import SliderPage from '../modules/apps/slider-management/SliderPage'
 
 const PrivateRoutes = () => {
   const {currentUser} = useAuth()
@@ -96,6 +97,16 @@ const PrivateRoutes = () => {
             element={
               <SuspensedView>
                 <SpeakerPage />
+              </SuspensedView>
+            }
+          />
+        )}
+        {(currentUser?.role === 'admin' || currentUser?.role === 'executive') && (
+          <Route
+            path='apps/slider-management/*'
+            element={
+              <SuspensedView>
+                <SliderPage />
               </SuspensedView>
             }
           />
