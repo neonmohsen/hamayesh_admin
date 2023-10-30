@@ -1,27 +1,40 @@
 import {ID, Response} from '../../../../../../_metronic/helpers'
+import {
+  AuthModel,
+  UserAddressModel,
+  UserEmailSettingsModel,
+  UserSocialNetworksModel,
+} from '../../../../auth'
 export type User = {
-  id?: ID
-  name?: string
-  avatar?: string
+  id?: string
+  password?: string | undefined
   email?: string
-  position?: string
+  firstName?: string
+  lastName?: string
+  job?: string
+  phoneNumber?: string
   role?: string
-  last_login?: string
-  two_steps?: boolean
-  joined_day?: string
-  online?: boolean
-  initials?: {
-    label: string
-    state: string
-  }
+  emailSettings?: UserEmailSettingsModel
+  auth?: AuthModel
+  address?: UserAddressModel
+  state?: string
+  city?: string
+  socialNetworks?: UserSocialNetworksModel
+  profileImage?: string
+  institute?: string
+  study_field?: string
+  gender?: string
+  national_id?: string
+  degree?: string
+  emailVerifiedAt?: Date
+  passwordConfirmation?: string
 }
 
 export type UsersQueryResponse = Response<Array<User>>
 
 export const initialUser: User = {
-  avatar: 'avatars/300-6.jpg',
-  position: 'Art Director',
+  profileImage: 'avatars/300-6.jpg',
   role: 'Administrator',
-  name: '',
+  firstName: '',
   email: '',
 }

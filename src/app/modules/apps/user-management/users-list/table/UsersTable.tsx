@@ -28,7 +28,7 @@ const UsersTable = () => {
           {...getTableProps()}
         >
           <thead>
-            <tr className='text-start text-muted fw-bolder fs-7 text-uppercase gs-0'>
+            <tr className='text-muted fw-bolder fs-7 text-uppercase gs-0'>
               {headers.map((column: ColumnInstance<User>) => (
                 <CustomHeaderColumn key={column.id} column={column} />
               ))}

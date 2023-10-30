@@ -1,6 +1,6 @@
 import {Dispatch, SetStateAction} from 'react'
 
-export type ID = undefined | null | number
+export type ID = undefined | null | string
 
 export type PaginationState = {
   page: number

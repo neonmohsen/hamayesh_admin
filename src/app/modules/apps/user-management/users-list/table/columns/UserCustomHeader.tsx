@@ -1,5 +1,6 @@
 import clsx from 'clsx'
 import {FC, PropsWithChildren, useMemo} from 'react'
+import {useIntl} from 'react-intl'
 import {HeaderProps} from 'react-table'
 import {initialQueryState} from '../../../../../../../_metronic/helpers'
 import {useQueryRequest} from '../../core/QueryRequestProvider'
@@ -13,6 +14,9 @@ type Props = {
 const UserCustomHeader: FC<Props> = ({className, title, tableProps}) => {
   const id = tableProps.column.id
   const {state, updateState} = useQueryRequest()
+  const intl = useIntl()
+
+  const message = intl.formatMessage({id: title})
 
   const isSelectedForSorting = useMemo(() => {
     return state.sort && state.sort === id
@@ -53,7 +57,7 @@ const UserCustomHeader: FC<Props> = ({className, title, tableProps}) => {
       style={{cursor: 'pointer'}}
       onClick={sortColumn}
     >
-      {title}
+      {message}
     </th>
   )
 }

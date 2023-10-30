@@ -1,11 +1,11 @@
 import {FC} from 'react'
 
 type Props = {
-  last_login?: string
+  national_id?: string
 }
 
-const UserLastLoginCell: FC<Props> = ({last_login}) => (
-  <div className='badge badge-light fw-bolder'>{last_login}</div>
+const UserLastLoginCell: FC<Props> = ({national_id}) => (
+  <div className='badge badge-light fw-bolder'>{national_id}</div>
 )
 
 export {UserLastLoginCell}

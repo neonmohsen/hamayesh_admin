@@ -1,3 +1,4 @@
+import {toast} from 'react-toastify'
 import {navigateTo} from '../../../../_metronic/helpers/History'
 import {AuthModel} from './_models'
 
@@ -66,18 +67,54 @@ export function setupAxios(axios: any) {
   // Response interceptor
   axios.interceptors.response.use(
     (response) => {
+      const {config, status, data} = response
+      const {method} = config
+
+      // Check if the method is 'delete', 'post', or 'put' (commonly used for update operations)
+      if (['delete', 'post', 'put', 'patch'].includes(method)) {
+        // Show a toast based on the status code or method
+        if (status === 200 || status === 201) {
+          // For successful post or delete
+          toast.success(data.message, {
+            position: 'top-right',
+            autoClose: 1500,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: 'colored',
+          }) // Customize your message here
+        }
+      }
+
       // Any status code that lies within the range of 2xx will cause this function to trigger
       // Do something with response data
       return response
     },
     (error) => {
-      // The request was made and the server responded with a status code
-      // that falls out of the range of 2xx
+      // Error response
+      if (error.response) {
+        // The request was made and the server responded with a status code
+        // that falls out of the range of 2xx
 
-      // You can check for specific status codes here if necessary
-      if (error.response.status === 415) {
-        // Handle specific error code (like 415)
-        navigateTo('/verify-email', {emailSent: true})
+        const {status, data} = error.response
+
+        // Handle specific status codes
+        if (status === 429) {
+          // Too Many Requests
+          toast.error('Too many requests. Please slow down.')
+        } else if (status === 415) {
+          // Specific action for status code 415
+          navigateTo('/verify-email', {emailSent: true})
+        } else {
+          // General error message
+          const errorMessage = data?.message || 'An error occurred'
+          toast.error(errorMessage)
+        }
+      } else {
+        // If there's no response from the server or another issue, you might want to show a general error message
+        toast.error('An error occurred. Please try again.')
       }
 
       // Important: Make sure to return the error, so the calling function knows it was an error.

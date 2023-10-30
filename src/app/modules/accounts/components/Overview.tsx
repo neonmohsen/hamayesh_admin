@@ -2,13 +2,7 @@
 import React from 'react'
 import {useIntl} from 'react-intl'
 import {Link} from 'react-router-dom'
-import {KTIcon} from '../../../../_metronic/helpers'
-import {
-  ChartsWidget1,
-  ListsWidget5,
-  TablesWidget1,
-  TablesWidget5,
-} from '../../../../_metronic/partials/widgets'
+
 import {useAuth} from '../../auth'
 
 export function Overview() {

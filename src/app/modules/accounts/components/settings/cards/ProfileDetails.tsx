@@ -94,6 +94,7 @@ const ProfileDetails: React.FC = () => {
     lastName: '',
     email: '',
     password: '',
+    passwordConfirmation: '',
     // changepassword: '',
     phoneNumber: '', // new field
     national_id: '', // new field
@@ -601,6 +602,45 @@ const ProfileDetails: React.FC = () => {
                     <div className='fv-help-block'>{formik.errors.degree}</div>
                   </div>
                 )}
+              </div>
+            </div>
+
+            <div className='row mb-6'>
+              <label className='col-lg-4 col-form-label required fw-bold fs-6'>
+                {' '}
+                {intl.formatMessage({id: 'AUTH.INPUT.PASSWORD'})}
+              </label>
+
+              <div className='col-lg-8'>
+                <div className='row'>
+                  <div className='col-lg-6 fv-row'>
+                    <input
+                      type='password'
+                      className='form-control form-control-lg form-control-solid mb-3 mb-lg-0'
+                      placeholder='password'
+                      {...formik.getFieldProps('password')}
+                    />
+                    {formik.touched.password && formik.errors.password && (
+                      <div className='fv-plugins-message-container'>
+                        <div className='fv-help-block'>{formik.errors.password}</div>
+                      </div>
+                    )}
+                  </div>
+
+                  <div className='col-lg-6 fv-row'>
+                    <input
+                      type='password'
+                      className='form-control form-control-lg form-control-solid'
+                      placeholder='Password Confirmation'
+                      {...formik.getFieldProps('passwordConfirmation')}
+                    />
+                    {formik.touched.passwordConfirmation && formik.errors.passwordConfirmation && (
+                      <div className='fv-plugins-message-container'>
+                        <div className='fv-help-block'>{formik.errors.passwordConfirmation}</div>
+                      </div>
+                    )}
+                  </div>
+                </div>
               </div>
             </div>
           </div>

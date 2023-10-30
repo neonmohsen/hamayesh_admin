@@ -64,6 +64,7 @@ export interface UserModel {
   national_id?: string
   degree?: string
   emailVerifiedAt?: Date
+  passwordConfirmation?: string
 }
 // This should reflect the structure of your state/city data
 export interface ILocation {

@@ -8,6 +8,7 @@ import {UserSelectionCell} from './UserSelectionCell'
 import {UserCustomHeader} from './UserCustomHeader'
 import {UserSelectionHeader} from './UserSelectionHeader'
 import {User} from '../../core/_models'
+import {UserCreatedAt} from './UserCreatedAt'
 
 const usersColumns: ReadonlyArray<Column<User>> = [
   {
@@ -16,37 +17,50 @@ const usersColumns: ReadonlyArray<Column<User>> = [
     Cell: ({...props}) => <UserSelectionCell id={props.data[props.row.index].id} />,
   },
   {
-    Header: (props) => <UserCustomHeader tableProps={props} title='Name' className='min-w-125px' />,
-    id: 'name',
+    Header: (props) => (
+      <UserCustomHeader tableProps={props} title='USER.TABLE.FULLNAME' className='min-w-125px' />
+    ),
+    id: 'firstName',
     Cell: ({...props}) => <UserInfoCell user={props.data[props.row.index]} />,
   },
   {
-    Header: (props) => <UserCustomHeader tableProps={props} title='Role' className='min-w-125px' />,
+    Header: (props) => (
+      <UserCustomHeader tableProps={props} title='USER.TABLE.ROLE' className='min-w-125px' />
+    ),
     accessor: 'role',
   },
   {
     Header: (props) => (
-      <UserCustomHeader tableProps={props} title='Last login' className='min-w-125px' />
+      <UserCustomHeader tableProps={props} title='USER.TABLE.NATIONALID' className='min-w-125px' />
     ),
     id: 'last_login',
-    Cell: ({...props}) => <UserLastLoginCell last_login={props.data[props.row.index].last_login} />,
-  },
-  {
-    Header: (props) => (
-      <UserCustomHeader tableProps={props} title='Two steps' className='min-w-125px' />
+    Cell: ({...props}) => (
+      <UserLastLoginCell national_id={props.data[props.row.index].national_id} />
     ),
-    id: 'two_steps',
-    Cell: ({...props}) => <UserTwoStepsCell two_steps={props.data[props.row.index].two_steps} />,
   },
   {
     Header: (props) => (
-      <UserCustomHeader tableProps={props} title='Joined day' className='min-w-125px' />
+      <UserCustomHeader tableProps={props} title='USER.TABLE.PHONENUMBER' className='min-w-125px' />
     ),
-    accessor: 'joined_day',
+    id: 'phoneNumber',
+    Cell: ({...props}) => (
+      <UserTwoStepsCell phoneNumber={props.data[props.row.index].phoneNumber} />
+    ),
   },
   {
     Header: (props) => (
-      <UserCustomHeader tableProps={props} title='Actions' className='text-end min-w-100px' />
+      <UserCustomHeader tableProps={props} title='USER.TABLE.CREATEDAT' className='min-w-125px' />
+    ),
+    id: 'createdAt',
+    Cell: ({...props}) => <UserCreatedAt created_at={props.data[props.row.index].createdAt} />,
+  },
+  {
+    Header: (props) => (
+      <UserCustomHeader
+        tableProps={props}
+        title='USER.TABLE.ACTIONS'
+        className='text-end min-w-100px'
+      />
     ),
     id: 'actions',
     Cell: ({...props}) => <UserActionsCell id={props.data[props.row.index].id} />,
