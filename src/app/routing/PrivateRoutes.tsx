@@ -11,6 +11,7 @@ import {useAuth} from '../modules/auth'
 import SupporterPage from '../modules/apps/supporter-management/SupporterPage'
 import SpeakerPage from '../modules/apps/speaker-management/SpeakerPage'
 import SliderPage from '../modules/apps/slider-management/SliderPage'
+import SecretariatsPage from '../modules/apps/secretariat-management/SecretariatPage'
 
 const PrivateRoutes = () => {
   const {currentUser} = useAuth()
@@ -107,6 +108,17 @@ const PrivateRoutes = () => {
             element={
               <SuspensedView>
                 <SliderPage />
+              </SuspensedView>
+            }
+          />
+        )}
+
+        {currentUser?.role === 'admin' && (
+          <Route
+            path='apps/secretariat-management/*'
+            element={
+              <SuspensedView>
+                <SecretariatsPage />
               </SuspensedView>
             }
           />

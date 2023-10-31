@@ -129,6 +129,11 @@ export function MenuInner() {
           to='/apps/slider-management/sliders'
           title='Slider management'
         />
+        <MenuItem
+          icon='shield-tick'
+          to='/apps/secretariat-management/secretariats'
+          title='Secretariat management'
+        />
       </MenuInnerWithSub>
       <MenuInnerWithSub
         isMega={true}
