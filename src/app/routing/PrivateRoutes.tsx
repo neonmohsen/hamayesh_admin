@@ -8,10 +8,6 @@ import {getCSSVariableValue} from '../../_metronic/assets/ts/_utils'
 import {WithChildren} from '../../_metronic/helpers'
 import BuilderPageWrapper from '../pages/layout-builder/BuilderPageWrapper'
 import {useAuth} from '../modules/auth'
-import SupporterPage from '../modules/apps/supporter-management/SupporterPage'
-import SpeakerPage from '../modules/apps/speaker-management/SpeakerPage'
-import SliderPage from '../modules/apps/slider-management/SliderPage'
-import SecretariatsPage from '../modules/apps/secretariat-management/SecretariatPage'
 
 const PrivateRoutes = () => {
   const {currentUser} = useAuth()
@@ -22,6 +18,14 @@ const PrivateRoutes = () => {
   const WidgetsPage = lazy(() => import('../modules/widgets/WidgetsPage'))
   const ChatPage = lazy(() => import('../modules/apps/chat/ChatPage'))
   const UsersPage = lazy(() => import('../modules/apps/user-management/UsersPage'))
+  const SupporterPage = lazy(() => import('../modules/apps/supporter-management/SupporterPage'))
+  const SpeakerPage = lazy(() => import('../modules/apps/speaker-management/SpeakerPage'))
+  const SliderPage = lazy(() => import('../modules/apps/slider-management/SliderPage'))
+  const SecretariatsPage = lazy(
+    () => import('../modules/apps/secretariat-management/SecretariatPage')
+  )
+  const QuestionPage = lazy(() => import('../modules/apps/question-management/QuestionPage'))
+
   return (
     <Routes>
       <Route element={<MasterLayout />}>
@@ -108,6 +112,17 @@ const PrivateRoutes = () => {
             element={
               <SuspensedView>
                 <SliderPage />
+              </SuspensedView>
+            }
+          />
+        )}
+
+        {(currentUser?.role === 'admin' || currentUser?.role === 'executive') && (
+          <Route
+            path='apps/question-management/*'
+            element={
+              <SuspensedView>
+                <QuestionPage />
               </SuspensedView>
             }
           />
