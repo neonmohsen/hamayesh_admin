@@ -144,6 +144,11 @@ export function MenuInner() {
           to='/apps/organizer-management/organizers'
           title='Organizer management'
         />
+        <MenuItem
+          icon='shield-tick'
+          to='/apps/newstag-management/newstags'
+          title='News tag management'
+        />
       </MenuInnerWithSub>
       <MenuInnerWithSub
         isMega={true}

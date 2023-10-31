@@ -26,6 +26,7 @@ const PrivateRoutes = () => {
   )
   const QuestionPage = lazy(() => import('../modules/apps/question-management/QuestionPage'))
   const OrganizerPage = lazy(() => import('../modules/apps/organizer-management/OrganizerPage'))
+  const NewsTagPage = lazy(() => import('../modules/apps/newstag-management/NewsTagPage'))
 
   return (
     <Routes>
@@ -134,6 +135,17 @@ const PrivateRoutes = () => {
             element={
               <SuspensedView>
                 <OrganizerPage />
+              </SuspensedView>
+            }
+          />
+        )}
+
+        {(currentUser?.role === 'admin' || currentUser?.role === 'executive') && (
+          <Route
+            path='apps/newstag-management/*'
+            element={
+              <SuspensedView>
+                <NewsTagPage />
               </SuspensedView>
             }
           />
