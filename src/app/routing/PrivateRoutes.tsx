@@ -25,6 +25,7 @@ const PrivateRoutes = () => {
     () => import('../modules/apps/secretariat-management/SecretariatPage')
   )
   const QuestionPage = lazy(() => import('../modules/apps/question-management/QuestionPage'))
+  const OrganizerPage = lazy(() => import('../modules/apps/organizer-management/OrganizerPage'))
 
   return (
     <Routes>
@@ -127,7 +128,16 @@ const PrivateRoutes = () => {
             }
           />
         )}
-
+        {(currentUser?.role === 'admin' || currentUser?.role === 'executive') && (
+          <Route
+            path='apps/organizer-management/*'
+            element={
+              <SuspensedView>
+                <OrganizerPage />
+              </SuspensedView>
+            }
+          />
+        )}
         {currentUser?.role === 'admin' && (
           <Route
             path='apps/secretariat-management/*'

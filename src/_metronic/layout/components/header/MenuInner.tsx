@@ -139,6 +139,11 @@ export function MenuInner() {
           to='/apps/question-management/questions'
           title='Question management'
         />
+        <MenuItem
+          icon='shield-tick'
+          to='/apps/organizer-management/organizers'
+          title='Organizer management'
+        />
       </MenuInnerWithSub>
       <MenuInnerWithSub
         isMega={true}
