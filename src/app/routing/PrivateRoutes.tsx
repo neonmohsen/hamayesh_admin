@@ -27,7 +27,9 @@ const PrivateRoutes = () => {
   const QuestionPage = lazy(() => import('../modules/apps/question-management/QuestionPage'))
   const OrganizerPage = lazy(() => import('../modules/apps/organizer-management/OrganizerPage'))
   const NewsTagPage = lazy(() => import('../modules/apps/newstag-management/NewsTagPage'))
-
+  const NewsCommentPage = lazy(
+    () => import('../modules/apps/newscomment-management/NewsCommentPage')
+  )
   return (
     <Routes>
       <Route element={<MasterLayout />}>
@@ -146,6 +148,17 @@ const PrivateRoutes = () => {
             element={
               <SuspensedView>
                 <NewsTagPage />
+              </SuspensedView>
+            }
+          />
+        )}
+
+        {(currentUser?.role === 'admin' || currentUser?.role === 'executive') && (
+          <Route
+            path='apps/newscomment-management/*'
+            element={
+              <SuspensedView>
+                <NewsCommentPage />
               </SuspensedView>
             }
           />
