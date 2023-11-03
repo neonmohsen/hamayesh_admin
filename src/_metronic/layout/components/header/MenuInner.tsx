@@ -154,6 +154,11 @@ export function MenuInner() {
           to='/apps/newscomment-management/newscomments'
           title='News comment management'
         />
+        <MenuItem
+          icon='shield-tick'
+          to='/apps/newscategory-management/newscategories'
+          title='News category management'
+        />
       </MenuInnerWithSub>
       <MenuInnerWithSub
         isMega={true}
