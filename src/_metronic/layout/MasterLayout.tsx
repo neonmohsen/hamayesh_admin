@@ -1,4 +1,4 @@
-import {FC, useEffect} from 'react'
+import {FC, useEffect, useState} from 'react'
 import {Outlet, useLocation} from 'react-router-dom'
 import {AsideDefault} from './components/aside/AsideDefault'
 import {Footer} from './components/Footer'
@@ -12,11 +12,16 @@ import {themeModeSwitchHelper, useThemeMode} from '../partials/layout/theme-mode
 import {MenuComponent} from '../../_metronic/assets/ts/components'
 import clsx from 'clsx'
 import {WithChildren} from '../helpers'
+import {getEventDetails} from '../../app/modules/auth/core/_requests'
+import {useAuth} from '../../app/modules/auth'
 
 const MasterLayout: FC<WithChildren> = ({children}) => {
   const {classes} = useLayout()
   const {mode} = useThemeMode()
   const location = useLocation()
+  const [eventDetails, setEventDetails] = useState<any>()
+
+  const {currentUser} = useAuth()
 
   useEffect(() => {
     setTimeout(() => {
@@ -27,6 +32,16 @@ const MasterLayout: FC<WithChildren> = ({children}) => {
   useEffect(() => {
     themeModeSwitchHelper(mode)
   }, [mode])
+
+  useEffect(() => {
+    if (currentUser?.role === 'admin') {
+      getEventDetails()
+        .then((data) => setEventDetails(data.data.data))
+        .catch((err) => console.log(err))
+    }
+
+    // similarly for fetchCities if needed
+  }, [currentUser])
 
   return (
     <PageDataProvider>
@@ -54,7 +69,7 @@ const MasterLayout: FC<WithChildren> = ({children}) => {
       </div>
 
       {/* begin:: Drawers */}
-      <ActivityDrawer />
+      {eventDetails && <ActivityDrawer eventDetails={eventDetails} />}
       <RightToolbar />
       <DrawerMessenger />
       {/* end:: Drawers */}

@@ -12,6 +12,8 @@ export const REQUEST_PASSWORD_URL = `${API_URL}/auth/forget-password`
 export const RESET_PASSWORD_URL = `${API_URL}/auth/reset-password`
 
 export const UPLOAD_URL = `${API_URL}/upload`
+export const EVENT_DETAILS = `${API_URL}/hamayesh-detail`
+
 export const VERIFY_CODE = `${API_URL}/auth/email-verified-send`
 export const VERIFY_EMAIL = `${API_URL}/auth/email-verified-check`
 
@@ -93,10 +95,18 @@ export function restPassword(token: string, password: string, passwordConfirmati
   })
 }
 
+export function updateEvent(data) {
+  return axios.patch(EVENT_DETAILS, data)
+}
+
 export function getUserByToken(token: string) {
   return axios.post(GET_USER_BY_ACCESSTOKEN_URL, {
     api_token: token,
   })
+}
+
+export function getEventDetails() {
+  return axios.get(EVENT_DETAILS)
 }
 
 export function sendVerifyCode() {
