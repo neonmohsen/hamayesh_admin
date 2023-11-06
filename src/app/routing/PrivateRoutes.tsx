@@ -34,6 +34,10 @@ const PrivateRoutes = () => {
     () => import('../modules/apps/newscategory-management/NewsCategoryPage')
   )
   const NewsPage = lazy(() => import('../modules/apps/news-management/NewsPage'))
+  const ArticleCategoriesPage = lazy(
+    () => import('../modules/apps/articleCategories-management/ArticleCategoriesPage')
+  )
+
   return (
     <Routes>
       <Route element={<MasterLayout />}>
@@ -183,6 +187,16 @@ const PrivateRoutes = () => {
             element={
               <SuspensedView>
                 <NewsPage />
+              </SuspensedView>
+            }
+          />
+        )}
+        {(currentUser?.role === 'admin' || currentUser?.role === 'scientific') && (
+          <Route
+            path='apps/articlecategories-management/*'
+            element={
+              <SuspensedView>
+                <ArticleCategoriesPage />
               </SuspensedView>
             }
           />
