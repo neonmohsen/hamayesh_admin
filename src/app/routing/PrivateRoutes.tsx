@@ -38,6 +38,8 @@ const PrivateRoutes = () => {
     () => import('../modules/apps/articleCategories-management/ArticleCategoriesPage')
   )
 
+  const AxiesPage = lazy(() => import('../modules/apps/axies-management/AxiesPage'))
+
   return (
     <Routes>
       <Route element={<MasterLayout />}>
@@ -197,6 +199,17 @@ const PrivateRoutes = () => {
             element={
               <SuspensedView>
                 <ArticleCategoriesPage />
+              </SuspensedView>
+            }
+          />
+        )}
+
+        {(currentUser?.role === 'admin' || currentUser?.role === 'executive') && (
+          <Route
+            path='apps/axies-management/*'
+            element={
+              <SuspensedView>
+                <AxiesPage />
               </SuspensedView>
             }
           />
