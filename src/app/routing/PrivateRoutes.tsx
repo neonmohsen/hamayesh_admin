@@ -8,6 +8,7 @@ import {getCSSVariableValue} from '../../_metronic/assets/ts/_utils'
 import {WithChildren} from '../../_metronic/helpers'
 import BuilderPageWrapper from '../pages/layout-builder/BuilderPageWrapper'
 import {useAuth} from '../modules/auth'
+import ArticlesPage from '../modules/apps/articles-management/ArticlesPage'
 
 const PrivateRoutes = () => {
   const {currentUser} = useAuth()
@@ -210,6 +211,18 @@ const PrivateRoutes = () => {
             element={
               <SuspensedView>
                 <AxiesPage />
+              </SuspensedView>
+            }
+          />
+        )}
+        {(currentUser?.role === 'admin' ||
+          currentUser?.role === 'referee' ||
+          currentUser?.role === 'scientific') && (
+          <Route
+            path='apps/article-management/*'
+            element={
+              <SuspensedView>
+                <ArticlesPage />
               </SuspensedView>
             }
           />

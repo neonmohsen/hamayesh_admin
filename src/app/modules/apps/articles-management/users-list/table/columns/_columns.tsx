@@ -20,33 +20,26 @@ const usersColumns: ReadonlyArray<Column<User>> = [
     Header: (props) => (
       <UserCustomHeader tableProps={props} title='USER.TABLE.FULLNAME' className='min-w-125px' />
     ),
-    id: 'firstName',
+    id: 'userId',
     Cell: ({...props}) => <UserInfoCell user={props.data[props.row.index]} />,
   },
-  {
-    Header: (props) => (
-      <UserCustomHeader tableProps={props} title='USER.TABLE.ROLE' className='min-w-125px' />
-    ),
-    accessor: 'faRole',
-  },
-  {
-    Header: (props) => (
-      <UserCustomHeader tableProps={props} title='USER.TABLE.NATIONALID' className='min-w-125px' />
-    ),
-    id: 'national_id',
-    Cell: ({...props}) => (
-      <UserLastLoginCell national_id={props.data[props.row.index].national_id} />
-    ),
-  },
+
   {
     Header: (props) => (
       <UserCustomHeader tableProps={props} title='USER.TABLE.PHONENUMBER' className='min-w-125px' />
     ),
-    id: 'phoneNumber',
-    Cell: ({...props}) => (
-      <UserTwoStepsCell phoneNumber={props.data[props.row.index].phoneNumber} />
-    ),
+    id: 'title',
+    Cell: ({...props}) => <UserTwoStepsCell phoneNumber={props.data[props.row.index].title} />,
   },
+
+  {
+    Header: (props) => (
+      <UserCustomHeader tableProps={props} title='USER.TABLE.PHONENUMBER' className='min-w-125px' />
+    ),
+    id: 'status',
+    Cell: ({...props}) => <UserLastLoginCell national_id={props.data[props.row.index].status} />,
+  },
+
   {
     Header: (props) => (
       <UserCustomHeader tableProps={props} title='USER.TABLE.CREATEDAT' className='min-w-125px' />

@@ -167,6 +167,11 @@ export function MenuInner() {
           title='Article category management'
         />
         <MenuItem icon='shield-tick' to='/apps/axies-management/axies' title='Axies management' />
+        <MenuItem
+          icon='shield-tick'
+          to='/apps/article-management/articles'
+          title='Article management'
+        />
       </MenuInnerWithSub>
       <MenuInnerWithSub
         isMega={true}

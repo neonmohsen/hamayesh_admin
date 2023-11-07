@@ -4,8 +4,8 @@ import {UsersListWrapper} from './users-list/UsersList'
 
 const usersBreadcrumbs: Array<PageLink> = [
   {
-    title: 'مدیریت کاربران',
-    path: '/apps/user-management/users',
+    title: 'Secretariat Management',
+    path: '/apps/article-management/articles',
     isSeparator: false,
     isActive: false,
   },
@@ -17,23 +17,23 @@ const usersBreadcrumbs: Array<PageLink> = [
   },
 ]
 
-const UsersPage = () => {
+const ArticlesPage = () => {
   return (
     <Routes>
       <Route element={<Outlet />}>
         <Route
-          path='users'
+          path='articles'
           element={
             <>
-              <PageTitle breadcrumbs={usersBreadcrumbs}>لیست کاربران</PageTitle>
+              <PageTitle breadcrumbs={usersBreadcrumbs}>Users list</PageTitle>
               <UsersListWrapper />
             </>
           }
         />
       </Route>
-      <Route index element={<Navigate to='/apps/user-management/users' />} />
+      <Route index element={<Navigate to='/apps/article-management/articles' />} />
     </Routes>
   )
 }
 
-export default UsersPage
+export default ArticlesPage
