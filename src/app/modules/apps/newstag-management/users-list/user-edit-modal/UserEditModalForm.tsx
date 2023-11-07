@@ -113,14 +113,14 @@ const UserEditModalForm: FC<Props> = ({user, isUserLoading}) => {
             {/* begin::Label */}
             <label className='required fw-bold fs-6 mb-2'>
               {' '}
-              {intl.formatMessage({id: 'AUTH.INPUT.FIRSTNAME'})}
+              {intl.formatMessage({id: 'AUTH.INPUT.TITLE'})}
             </label>
 
             {/* end::Label */}
 
             {/* begin::Input */}
             <input
-              placeholder={intl.formatMessage({id: 'AUTH.INPUT.FIRSTNAME'})}
+              placeholder={intl.formatMessage({id: 'AUTH.INPUT.TITLE'})}
               {...formik.getFieldProps('title')}
               type='text'
               name='title'

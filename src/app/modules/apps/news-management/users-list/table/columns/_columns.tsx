@@ -18,7 +18,7 @@ const usersColumns: ReadonlyArray<Column<User>> = [
   },
   {
     Header: (props) => (
-      <UserCustomHeader tableProps={props} title='USER.TABLE.FULLNAME' className='min-w-125px' />
+      <UserCustomHeader tableProps={props} title='NEWS.TABLE.TITLE' className='min-w-125px' />
     ),
     id: 'title',
     Cell: ({...props}) => <UserInfoCell user={props.data[props.row.index]} />,
@@ -26,7 +26,7 @@ const usersColumns: ReadonlyArray<Column<User>> = [
 
   {
     Header: (props) => (
-      <UserCustomHeader tableProps={props} title='USER.TABLE.FULLNAME' className='min-w-125px' />
+      <UserCustomHeader tableProps={props} title='NEWS.TABLE.WRITER' className='min-w-125px' />
     ),
     id: 'writer',
     Cell: ({...props}) => <UserInfoCell1 user={props.data[props.row.index]} />,
@@ -34,14 +34,14 @@ const usersColumns: ReadonlyArray<Column<User>> = [
 
   {
     Header: (props) => (
-      <UserCustomHeader tableProps={props} title='USER.TABLE.CREATEDAT' className='min-w-125px' />
+      <UserCustomHeader tableProps={props} title='NEWS.TABLE.PUBLISHDATE' className='min-w-125px' />
     ),
     id: 'publishDate',
     Cell: ({...props}) => <UserCreatedAt created_at={props.data[props.row.index].publishDate} />,
   },
   {
     Header: (props) => (
-      <UserCustomHeader tableProps={props} title='USER.TABLE.CREATEDAT' className='min-w-125px' />
+      <UserCustomHeader tableProps={props} title='NEWS.TABLE.CREATEDAT' className='min-w-125px' />
     ),
     id: 'createdAt',
     Cell: ({...props}) => <UserCreatedAt created_at={props.data[props.row.index].createdAt} />,

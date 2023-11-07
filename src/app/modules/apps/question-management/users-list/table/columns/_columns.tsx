@@ -1,8 +1,6 @@
 // @ts-nocheck
 import {Column} from 'react-table'
 import {UserInfoCell} from './UserInfoCell'
-import {UserLastLoginCell} from './UserLastLoginCell'
-import {UserTwoStepsCell} from './UserTwoStepsCell'
 import {UserActionsCell} from './UserActionsCell'
 import {UserSelectionCell} from './UserSelectionCell'
 import {UserCustomHeader} from './UserCustomHeader'
@@ -18,7 +16,7 @@ const usersColumns: ReadonlyArray<Column<User>> = [
   },
   {
     Header: (props) => (
-      <UserCustomHeader tableProps={props} title='USER.TABLE.FULLNAME' className='min-w-125px' />
+      <UserCustomHeader tableProps={props} title='QUESTIONS.TABLE.TITLE' className='min-w-125px' />
     ),
     id: 'title',
     Cell: ({...props}) => <UserInfoCell user={props.data[props.row.index]} />,
@@ -26,7 +24,11 @@ const usersColumns: ReadonlyArray<Column<User>> = [
 
   {
     Header: (props) => (
-      <UserCustomHeader tableProps={props} title='USER.TABLE.NATIONALID' className='min-w-125px' />
+      <UserCustomHeader
+        tableProps={props}
+        title='QUESTIONS.TABLE.UPDATEDAT'
+        className='min-w-125px'
+      />
     ),
     id: 'updatedAt',
     Cell: ({...props}) => <UserCreatedAt created_at={props.data[props.row.index].updatedAt} />,
@@ -34,7 +36,11 @@ const usersColumns: ReadonlyArray<Column<User>> = [
 
   {
     Header: (props) => (
-      <UserCustomHeader tableProps={props} title='USER.TABLE.CREATEDAT' className='min-w-125px' />
+      <UserCustomHeader
+        tableProps={props}
+        title='QUESTIONS.TABLE.CREATEDAT'
+        className='min-w-125px'
+      />
     ),
     id: 'createdAt',
     Cell: ({...props}) => <UserCreatedAt created_at={props.data[props.row.index].createdAt} />,

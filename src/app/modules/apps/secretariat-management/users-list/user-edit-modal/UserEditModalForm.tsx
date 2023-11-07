@@ -161,14 +161,14 @@ const UserEditModalForm: FC<Props> = ({user, isUserLoading}) => {
             {/* begin::Label */}
             <label className='required fw-bold fs-6 mb-2'>
               {' '}
-              {intl.formatMessage({id: 'AUTH.INPUT.FIRSTNAME'})}
+              {intl.formatMessage({id: 'AUTH.INPUT.TITLE'})}
             </label>
 
             {/* end::Label */}
 
             {/* begin::Input */}
             <input
-              placeholder={intl.formatMessage({id: 'AUTH.INPUT.FIRSTNAME'})}
+              placeholder={intl.formatMessage({id: 'AUTH.INPUT.TITLE'})}
               {...formik.getFieldProps('title')}
               type='text'
               name='title'
@@ -196,14 +196,14 @@ const UserEditModalForm: FC<Props> = ({user, isUserLoading}) => {
             {/* begin::Label */}
             <label className='required fw-bold fs-6 mb-2'>
               {' '}
-              {intl.formatMessage({id: 'AUTH.INPUT.LASTNAME'})}
+              {intl.formatMessage({id: 'AUTH.INPUT.DESCRIPTION'})}
             </label>
 
             {/* end::Label */}
 
             {/* begin::Input */}
             <textarea
-              placeholder={intl.formatMessage({id: 'AUTH.INPUT.LASTNAME'})}
+              placeholder={intl.formatMessage({id: 'AUTH.INPUT.DESCRIPTION'})}
               {...formik.getFieldProps('description')}
               name='description'
               className={clsx(
@@ -230,7 +230,7 @@ const UserEditModalForm: FC<Props> = ({user, isUserLoading}) => {
           <div className='fv-row mb-7'>
             {/* begin::Label */}
             <label className='required fw-bold fs-6 mb-2'>
-              {intl.formatMessage({id: 'AUTH.INPUT.GENDER'})}
+              {intl.formatMessage({id: 'AUTH.INPUT.USERS'})}
             </label>
             {/* end::Label */}
 
@@ -246,7 +246,7 @@ const UserEditModalForm: FC<Props> = ({user, isUserLoading}) => {
                 formik.setFieldValue('users', selectedIds)
                 setSelectedUsers(selectedOptions ? Array.from(selectedOptions) : [])
               }}
-              placeholder={intl.formatMessage({id: 'AUTH.INPUT.GENDER'})}
+              placeholder={intl.formatMessage({id: 'AUTH.INPUT.USERS'})}
               className={clsx(
                 'form-control form-control-solid mb-3 mb-lg-0',
                 {'is-invalid': formik.touched.users && formik.errors.users},
@@ -270,7 +270,7 @@ const UserEditModalForm: FC<Props> = ({user, isUserLoading}) => {
           <div className='fv-row mb-7'>
             {/* begin::Label */}
             <label className='required fw-bold fs-6 mb-2'>
-              {intl.formatMessage({id: 'AUTH.INPUT.GENDER'})}
+              {intl.formatMessage({id: 'AUTH.INPUT.BOSS'})}
             </label>
             {/* end::Label */}
 
@@ -304,13 +304,13 @@ const UserEditModalForm: FC<Props> = ({user, isUserLoading}) => {
           <div className='fv-row mb-7'>
             {/* begin::Label */}
             <label className='required fw-bold fs-6 mb-2'>
-              {intl.formatMessage({id: 'AUTH.INPUT.GENDER'})}
+              {intl.formatMessage({id: 'AUTH.INPUT.TYPE'})}
             </label>
             {/* end::Label */}
 
             {/* begin::Input */}
             <select
-              placeholder={intl.formatMessage({id: 'AUTH.INPUT.GENDER'})}
+              placeholder={intl.formatMessage({id: 'AUTH.INPUT.TYPE'})}
               {...formik.getFieldProps('supportType')}
               className={clsx(
                 'form-control form-control-solid mb-3 mb-lg-0',
@@ -319,17 +319,20 @@ const UserEditModalForm: FC<Props> = ({user, isUserLoading}) => {
                   'is-valid': formik.touched.type && !formik.errors.type,
                 }
               )}
-              name='type'
+              name='supportType'
               autoComplete='off'
               disabled={formik.isSubmitting || isUserLoading}
             >
-              <option value=''> {intl.formatMessage({id: 'AUTH.INPUT.GENDER'})}</option>
-              <option value='academic'> {intl.formatMessage({id: 'AUTH.INPUT.MALE'})}</option>
+              <option value=''> {intl.formatMessage({id: 'AUTH.INPUT.TYPE'})}</option>
+              <option value='academic'> {intl.formatMessage({id: 'AUTH.INPUT.ACADEMIC'})}</option>
 
-              <option value='executive'> {intl.formatMessage({id: 'AUTH.INPUT.FEMALE'})}</option>
-              <option value='policy'> {intl.formatMessage({id: 'AUTH.INPUT.policy'})}</option>
+              <option value='executive'>
+                {' '}
+                {intl.formatMessage({id: 'AUTH.INPUT.EXECUTIVE1'})}
+              </option>
+              <option value='policy'> {intl.formatMessage({id: 'AUTH.INPUT.POLICY'})}</option>
               <option value='conference'>
-                {intl.formatMessage({id: 'AUTH.INPUT.conferance'})}
+                {intl.formatMessage({id: 'AUTH.INPUT.CONFERENCE'})}
               </option>
             </select>
             {/* end::Input */}
@@ -352,7 +355,7 @@ const UserEditModalForm: FC<Props> = ({user, isUserLoading}) => {
             data-kt-users-modal-action='cancel'
             disabled={formik.isSubmitting || isUserLoading}
           >
-            Discard
+            {intl.formatMessage({id: 'AUTH.BOTTUN.CANCEL'})}
           </button>
 
           <button
@@ -361,10 +364,13 @@ const UserEditModalForm: FC<Props> = ({user, isUserLoading}) => {
             data-kt-users-modal-action='submit'
             disabled={isUserLoading || formik.isSubmitting || !formik.isValid || !formik.touched}
           >
-            <span className='indicator-label'>Submit</span>
+            <span className='indicator-label'>
+              {' '}
+              {intl.formatMessage({id: 'AUTH.BOTTUN.SUBMIT'})}
+            </span>
             {(formik.isSubmitting || isUserLoading) && (
               <span className='indicator-progress'>
-                Please wait...{' '}
+                {intl.formatMessage({id: 'AUTH.BOTTUN.LOADING'})}
                 <span className='spinner-border spinner-border-sm align-middle ms-2'></span>
               </span>
             )}

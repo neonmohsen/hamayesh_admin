@@ -101,7 +101,7 @@ export function MenuInner() {
 
       <MenuInnerWithSub title='Apps' to='/apps' menuPlacement='bottom-start' menuTrigger='click'>
         {/* PAGES */}
-        <MenuInnerWithSub
+        {/* <MenuInnerWithSub
           title='Chat'
           to='/apps/chat'
           icon='message-text-2'
@@ -112,66 +112,58 @@ export function MenuInner() {
           <MenuItem to='/apps/chat/private-chat' title='Private Chat' hasBullet={true} />
           <MenuItem to='/apps/chat/group-chat' title='Group Chart' hasBullet={true} />
           <MenuItem to='/apps/chat/drawer-chat' title='Drawer Chart' hasBullet={true} />
-        </MenuInnerWithSub>
-        <MenuItem icon='shield-tick' to='/apps/user-management/users' title='User management' />
+        </MenuInnerWithSub> */}
+        <MenuItem icon='shield-tick' to='/apps/user-management/users' title='مدیریت کاربران' />
         <MenuItem
           icon='shield-tick'
           to='/apps/supporter-management/supporters'
-          title='Supporter management'
+          title='مدیریت حامیان'
         />
         <MenuItem
           icon='shield-tick'
           to='/apps/speaker-management/speakers'
-          title='Speakers management'
+          title='مدیریت سخنرانان'
         />
-        <MenuItem
-          icon='shield-tick'
-          to='/apps/slider-management/sliders'
-          title='Slider management'
-        />
+        <MenuItem icon='shield-tick' to='/apps/slider-management/sliders' title='مدیریت اسلایدر' />
         <MenuItem
           icon='shield-tick'
           to='/apps/secretariat-management/secretariats'
-          title='Secretariat management'
+          title='مدیریت دبیرخانه ها'
         />
         <MenuItem
           icon='shield-tick'
           to='/apps/question-management/questions'
-          title='Question management'
+          title='مدیریت سوالات متداول'
         />
         <MenuItem
           icon='shield-tick'
           to='/apps/organizer-management/organizers'
-          title='Organizer management'
+          title='مدیریت برگذار کننده ها'
         />
         <MenuItem
           icon='shield-tick'
           to='/apps/newstag-management/newstags'
-          title='News tag management'
+          title='مدیریت تگ های خبر'
         />
         <MenuItem
           icon='shield-tick'
           to='/apps/newscomment-management/newscomments'
-          title='News comment management'
+          title='مدیریت کامنت های خبر'
         />
         <MenuItem
           icon='shield-tick'
           to='/apps/newscategory-management/newscategories'
-          title='News category management'
+          title='مدیریت دسته بندی اخبار'
         />
 
-        <MenuItem icon='shield-tick' to='/apps/news-management/news' title='News management' />
+        <MenuItem icon='shield-tick' to='/apps/news-management/news' title='مدیریت اخبار' />
         <MenuItem
           icon='shield-tick'
           to='/apps/articlecategories-management/articlecategories'
-          title='Article category management'
+          title='مدیریت دسته بندی مقالات'
         />
-        <MenuItem icon='shield-tick' to='/apps/axies-management/axies' title='Axies management' />
-        <MenuItem
-          icon='shield-tick'
-          to='/apps/article-management/articles'
-          title='Article management'
-        />
+        <MenuItem icon='shield-tick' to='/apps/axies-management/axies' title='مدیریت محور ها' />
+        <MenuItem icon='shield-tick' to='/apps/article-management/articles' title='مدیریت مقالات' />
       </MenuInnerWithSub>
       <MenuInnerWithSub
         isMega={true}

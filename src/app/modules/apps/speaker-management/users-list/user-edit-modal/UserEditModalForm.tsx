@@ -56,10 +56,6 @@ const UserEditModalForm: FC<Props> = ({user, isUserLoading}) => {
       .catch()
   }, [])
 
-  useEffect(() => {
-    console.log(userList)
-  }, [userList])
-
   const cancel = (withRefresh?: boolean) => {
     if (withRefresh) {
       refetch()
@@ -126,14 +122,14 @@ const UserEditModalForm: FC<Props> = ({user, isUserLoading}) => {
             {/* begin::Label */}
             <label className='required fw-bold fs-6 mb-2'>
               {' '}
-              {intl.formatMessage({id: 'AUTH.INPUT.FIRSTNAME'})}
+              {intl.formatMessage({id: 'AUTH.INPUT.TITLE'})}
             </label>
 
             {/* end::Label */}
 
             {/* begin::Input */}
             <input
-              placeholder={intl.formatMessage({id: 'AUTH.INPUT.FIRSTNAME'})}
+              placeholder={intl.formatMessage({id: 'AUTH.INPUT.TITLE'})}
               {...formik.getFieldProps('title')}
               type='text'
               name='title'
@@ -161,14 +157,14 @@ const UserEditModalForm: FC<Props> = ({user, isUserLoading}) => {
             {/* begin::Label */}
             <label className='required fw-bold fs-6 mb-2'>
               {' '}
-              {intl.formatMessage({id: 'AUTH.INPUT.LASTNAME'})}
+              {intl.formatMessage({id: 'AUTH.INPUT.DESCRIPTION'})}
             </label>
 
             {/* end::Label */}
 
             {/* begin::Input */}
             <textarea
-              placeholder={intl.formatMessage({id: 'AUTH.INPUT.LASTNAME'})}
+              placeholder={intl.formatMessage({id: 'AUTH.INPUT.DESCRIPTION'})}
               {...formik.getFieldProps('description')}
               name='description'
               className={clsx(
@@ -195,13 +191,13 @@ const UserEditModalForm: FC<Props> = ({user, isUserLoading}) => {
           <div className='fv-row mb-7'>
             {/* begin::Label */}
             <label className='required fw-bold fs-6 mb-2'>
-              {intl.formatMessage({id: 'AUTH.INPUT.GENDER'})}
+              {intl.formatMessage({id: 'AUTH.INPUT.USERS'})}
             </label>
             {/* end::Label */}
 
             {/* begin::Input */}
             <select
-              placeholder={intl.formatMessage({id: 'AUTH.INPUT.GENDER'})}
+              placeholder={intl.formatMessage({id: 'AUTH.INPUT.USERS'})}
               {...formik.getFieldProps('user')}
               className={clsx(
                 'form-control form-control-solid mb-3 mb-lg-0',
@@ -214,7 +210,7 @@ const UserEditModalForm: FC<Props> = ({user, isUserLoading}) => {
               autoComplete='off'
               disabled={formik.isSubmitting || isUserLoading}
             >
-              <option value=''> {intl.formatMessage({id: 'AUTH.INPUT.CITY'})}</option>
+              <option value=''> {intl.formatMessage({id: 'AUTH.INPUT.USERS'})}</option>
               {userList.map((user) => (
                 <option key={user.id} value={user.id}>
                   {user.firstName} {user.lastName}
@@ -243,7 +239,7 @@ const UserEditModalForm: FC<Props> = ({user, isUserLoading}) => {
             data-kt-users-modal-action='cancel'
             disabled={formik.isSubmitting || isUserLoading}
           >
-            Discard
+            {intl.formatMessage({id: 'AUTH.BOTTUN.CANCEL'})}
           </button>
 
           <button
@@ -252,10 +248,13 @@ const UserEditModalForm: FC<Props> = ({user, isUserLoading}) => {
             data-kt-users-modal-action='submit'
             disabled={isUserLoading || formik.isSubmitting || !formik.isValid || !formik.touched}
           >
-            <span className='indicator-label'>Submit</span>
+            <span className='indicator-label'>
+              {' '}
+              {intl.formatMessage({id: 'AUTH.BOTTUN.SUBMIT'})}
+            </span>
             {(formik.isSubmitting || isUserLoading) && (
               <span className='indicator-progress'>
-                Please wait...{' '}
+                {intl.formatMessage({id: 'AUTH.BOTTUN.LOADING'})}
                 <span className='spinner-border spinner-border-sm align-middle ms-2'></span>
               </span>
             )}

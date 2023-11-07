@@ -112,14 +112,14 @@ const UserEditModalForm: FC<Props> = ({user, isUserLoading}) => {
             {/* begin::Label */}
             <label className='required fw-bold fs-6 mb-2'>
               {' '}
-              {intl.formatMessage({id: 'AUTH.INPUT.FIRSTNAME'})}
+              {intl.formatMessage({id: 'AUTH.INPUT.COMMENT'})}
             </label>
 
             {/* end::Label */}
 
             {/* begin::Input */}
             <textarea
-              placeholder={intl.formatMessage({id: 'AUTH.INPUT.FIRSTNAME'})}
+              placeholder={intl.formatMessage({id: 'AUTH.INPUT.COMMENT'})}
               {...formik.getFieldProps('comment')}
               name='comment'
               className={clsx(
@@ -146,14 +146,14 @@ const UserEditModalForm: FC<Props> = ({user, isUserLoading}) => {
             {/* begin::Label */}
             <label className='required fw-bold fs-6 mb-2'>
               {' '}
-              {intl.formatMessage({id: 'AUTH.INPUT.LASTNAME'})}
+              {intl.formatMessage({id: 'AUTH.INPUT.LIKENUMBER'})}
             </label>
 
             {/* end::Label */}
 
             {/* begin::Input */}
             <input
-              placeholder={intl.formatMessage({id: 'AUTH.INPUT.LASTNAME'})}
+              placeholder={intl.formatMessage({id: 'AUTH.INPUT.LIKENUMBER'})}
               {...formik.getFieldProps('likeNumber')}
               name='likeNumber'
               className={clsx(
@@ -180,14 +180,14 @@ const UserEditModalForm: FC<Props> = ({user, isUserLoading}) => {
             {/* begin::Label */}
             <label className='required fw-bold fs-6 mb-2'>
               {' '}
-              {intl.formatMessage({id: 'AUTH.INPUT.LASTNAME'})}
+              {intl.formatMessage({id: 'AUTH.INPUT.FIRSTNAME'})}
             </label>
 
             {/* end::Label */}
 
             {/* begin::Input */}
             <input
-              placeholder={intl.formatMessage({id: 'AUTH.INPUT.LASTNAME'})}
+              placeholder={intl.formatMessage({id: 'AUTH.INPUT.FIRSTNAME'})}
               {...formik.getFieldProps('userFirstName')}
               name='userFirstName'
               className={clsx(
@@ -248,14 +248,14 @@ const UserEditModalForm: FC<Props> = ({user, isUserLoading}) => {
             {/* begin::Label */}
             <label className='required fw-bold fs-6 mb-2'>
               {' '}
-              {intl.formatMessage({id: 'AUTH.INPUT.LASTNAME'})}
+              {intl.formatMessage({id: 'AUTH.INPUT.IP'})}
             </label>
 
             {/* end::Label */}
 
             {/* begin::Input */}
             <input
-              placeholder={intl.formatMessage({id: 'AUTH.INPUT.LASTNAME'})}
+              placeholder={intl.formatMessage({id: 'AUTH.INPUT.IP'})}
               {...formik.getFieldProps('userIp')}
               name='userIp'
               className={clsx(
@@ -285,7 +285,7 @@ const UserEditModalForm: FC<Props> = ({user, isUserLoading}) => {
 
             {/* begin::Input */}
             <input
-              placeholder={intl.formatMessage({id: 'AUTH.INPUT.LASTNAME'})}
+              placeholder={intl.formatMessage({id: 'AUTH.INPUT.STATUS'})}
               {...formik.getFieldProps('status')}
               name='status'
               type='checkbox'
@@ -309,7 +309,7 @@ const UserEditModalForm: FC<Props> = ({user, isUserLoading}) => {
             )}
             <label htmlFor='flexSwitchDefault' className='form-check-label fw-bold fs-6 '>
               {' '}
-              {intl.formatMessage({id: 'AUTH.INPUT.LASTNAME'})}
+              {intl.formatMessage({id: 'AUTH.INPUT.STATUS'})}
             </label>
             {/* end::Input */}
           </div>
@@ -329,7 +329,7 @@ const UserEditModalForm: FC<Props> = ({user, isUserLoading}) => {
             data-kt-users-modal-action='cancel'
             disabled={formik.isSubmitting || isUserLoading}
           >
-            Discard
+            {intl.formatMessage({id: 'AUTH.BOTTUN.CANCEL'})}
           </button>
 
           <button
@@ -338,10 +338,13 @@ const UserEditModalForm: FC<Props> = ({user, isUserLoading}) => {
             data-kt-users-modal-action='submit'
             disabled={isUserLoading || formik.isSubmitting || !formik.isValid || !formik.touched}
           >
-            <span className='indicator-label'>Submit</span>
+            <span className='indicator-label'>
+              {' '}
+              {intl.formatMessage({id: 'AUTH.BOTTUN.SUBMIT'})}
+            </span>
             {(formik.isSubmitting || isUserLoading) && (
               <span className='indicator-progress'>
-                Please wait...{' '}
+                {intl.formatMessage({id: 'AUTH.BOTTUN.LOADING'})}
                 <span className='spinner-border spinner-border-sm align-middle ms-2'></span>
               </span>
             )}

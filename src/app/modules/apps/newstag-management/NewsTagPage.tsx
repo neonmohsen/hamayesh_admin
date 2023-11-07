@@ -4,7 +4,7 @@ import {UsersListWrapper} from './users-list/UsersList'
 
 const usersBreadcrumbs: Array<PageLink> = [
   {
-    title: 'News Tag Management',
+    title: 'مدیریت تگ ها',
     path: '/apps/newstag-management/newstags',
     isSeparator: false,
     isActive: false,
@@ -25,7 +25,7 @@ const NewsTagPage = () => {
           path='newstags'
           element={
             <>
-              <PageTitle breadcrumbs={usersBreadcrumbs}>Users list</PageTitle>
+              <PageTitle breadcrumbs={usersBreadcrumbs}>لیست تگ ها</PageTitle>
               <UsersListWrapper />
             </>
           }

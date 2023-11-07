@@ -293,14 +293,14 @@ const UserEditModalForm: FC<Props> = ({user, isUserLoading}) => {
             {/* begin::Label */}
             <label className='required fw-bold fs-6 mb-2'>
               {' '}
-              {intl.formatMessage({id: 'AUTH.INPUT.LASTNAME'})}
+              {intl.formatMessage({id: 'AUTH.INPUT.LINK'})}
             </label>
 
             {/* end::Label */}
 
             {/* begin::Input */}
             <input
-              placeholder={intl.formatMessage({id: 'AUTH.INPUT.LASTNAME'})}
+              placeholder={intl.formatMessage({id: 'AUTH.INPUT.LINK'})}
               {...formik.getFieldProps('link')}
               type='text'
               name='link'
@@ -328,14 +328,14 @@ const UserEditModalForm: FC<Props> = ({user, isUserLoading}) => {
             {/* begin::Label */}
             <label className='required fw-bold fs-6 mb-2'>
               {' '}
-              {intl.formatMessage({id: 'AUTH.INPUT.JOB'})}
+              {intl.formatMessage({id: 'AUTH.INPUT.DESCRIPTION'})}
             </label>
 
             {/* end::Label */}
 
             {/* begin::Input */}
             <textarea
-              placeholder={intl.formatMessage({id: 'AUTH.INPUT.JOB'})}
+              placeholder={intl.formatMessage({id: 'AUTH.INPUT.DESCRIPTION'})}
               {...formik.getFieldProps('details.description')}
               name='details.description'
               className={clsx(
@@ -367,13 +367,13 @@ const UserEditModalForm: FC<Props> = ({user, isUserLoading}) => {
           <div className='fv-row mb-7'>
             {/* begin::Label */}
             <label className='required fw-bold fs-6 mb-2'>
-              {intl.formatMessage({id: 'AUTH.INPUT.STUDYFIELD'})}
+              {intl.formatMessage({id: 'AUTH.INPUT.ADDRESS'})}
             </label>
             {/* end::Label */}
 
             {/* begin::Input */}
             <input
-              placeholder={intl.formatMessage({id: 'AUTH.INPUT.STUDYFIELD'})}
+              placeholder={intl.formatMessage({id: 'AUTH.INPUT.ADDRESS'})}
               {...formik.getFieldProps('details.address.address')}
               className={clsx(
                 'form-control form-control-solid mb-3 mb-lg-0',
@@ -410,7 +410,7 @@ const UserEditModalForm: FC<Props> = ({user, isUserLoading}) => {
             {emails.map((item, index) => (
               <div key={index} className='d-flex align-items-center mb-2'>
                 <input
-                  placeholder='Question'
+                  placeholder={intl.formatMessage({id: 'AUTH.INPUT.EMAIL'})}
                   value={item}
                   onChange={(e) => handleEmailChange(e, index)}
                   className='form-control form-control-solid me-2'
@@ -420,13 +420,13 @@ const UserEditModalForm: FC<Props> = ({user, isUserLoading}) => {
                   className='btn btn-light me-3'
                   onClick={() => handleEmailDelete(index)}
                 >
-                  Delete
+                  حذف
                 </button>
               </div>
             ))}
 
             <button className='btn btn-primary' type='button' onClick={handleEmailAdd}>
-              Add Item
+              افزودن
             </button>
           </div>
 
@@ -439,7 +439,7 @@ const UserEditModalForm: FC<Props> = ({user, isUserLoading}) => {
             {phoneNumbers.map((item, index) => (
               <div key={index} className='d-flex align-items-center mb-2'>
                 <input
-                  placeholder='Question'
+                  placeholder={intl.formatMessage({id: 'AUTH.INPUT.PHONENUMBER'})}
                   value={item}
                   onChange={(e) => handlePhoneNumberChange(e, index)}
                   className='form-control form-control-solid me-2'
@@ -449,13 +449,13 @@ const UserEditModalForm: FC<Props> = ({user, isUserLoading}) => {
                   className='btn btn-light me-3'
                   onClick={() => handlePhoneNumberDelete(index)}
                 >
-                  Delete
+                  حذف
                 </button>
               </div>
             ))}
 
             <button className='btn btn-primary' type='button' onClick={handlePhoneNumberAdd}>
-              Add Item
+              افزودن
             </button>
           </div>
 
@@ -508,13 +508,13 @@ const UserEditModalForm: FC<Props> = ({user, isUserLoading}) => {
           <div className='fv-row mb-7'>
             {/* begin::Label */}
             <label className='required fw-bold fs-6 mb-2'>
-              {intl.formatMessage({id: 'AUTH.INPUT.STATE'})}
+              {intl.formatMessage({id: 'AUTH.INPUT.CITY'})}
             </label>
             {/* end::Label */}
 
             {/* begin::Input */}
             <select
-              placeholder={intl.formatMessage({id: 'AUTH.INPUT.STATE'})}
+              placeholder={intl.formatMessage({id: 'AUTH.INPUT.CITY'})}
               {...formik.getFieldProps('details.address.city')}
               className={clsx(
                 'form-control form-control-solid mb-3 mb-lg-0',
@@ -531,7 +531,7 @@ const UserEditModalForm: FC<Props> = ({user, isUserLoading}) => {
               autoComplete='off'
               disabled={formik.isSubmitting || isUserLoading}
             >
-              <option value=''> {intl.formatMessage({id: 'AUTH.INPUT.STATE'})}</option>
+              <option value=''> {intl.formatMessage({id: 'AUTH.INPUT.CITY'})}</option>
               {cities.map((city) => (
                 <option key={city._id} value={city._id}>
                   {city.city}
@@ -556,7 +556,7 @@ const UserEditModalForm: FC<Props> = ({user, isUserLoading}) => {
             data-kt-users-modal-action='cancel'
             disabled={formik.isSubmitting || isUserLoading}
           >
-            Discard
+            {intl.formatMessage({id: 'AUTH.BOTTUN.CANCEL'})}
           </button>
 
           <button
@@ -565,10 +565,13 @@ const UserEditModalForm: FC<Props> = ({user, isUserLoading}) => {
             data-kt-users-modal-action='submit'
             disabled={isUserLoading || formik.isSubmitting || !formik.isValid || !formik.touched}
           >
-            <span className='indicator-label'>Submit</span>
+            <span className='indicator-label'>
+              {' '}
+              {intl.formatMessage({id: 'AUTH.BOTTUN.SUBMIT'})}
+            </span>
             {(formik.isSubmitting || isUserLoading) && (
               <span className='indicator-progress'>
-                Please wait...{' '}
+                {intl.formatMessage({id: 'AUTH.BOTTUN.LOADING'})}
                 <span className='spinner-border spinner-border-sm align-middle ms-2'></span>
               </span>
             )}

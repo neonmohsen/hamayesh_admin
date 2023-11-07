@@ -133,14 +133,14 @@ const UserEditModalForm: FC<Props> = ({user, isUserLoading}) => {
             {/* begin::Label */}
             <label className='required fw-bold fs-6 mb-2'>
               {' '}
-              {intl.formatMessage({id: 'AUTH.INPUT.FIRSTNAME'})}
+              {intl.formatMessage({id: 'AUTH.INPUT.TITLE'})}
             </label>
 
             {/* end::Label */}
 
             {/* begin::Input */}
             <input
-              placeholder={intl.formatMessage({id: 'AUTH.INPUT.FIRSTNAME'})}
+              placeholder={intl.formatMessage({id: 'AUTH.INPUT.TITLE'})}
               {...formik.getFieldProps('title')}
               type='text'
               name='title'
@@ -168,14 +168,14 @@ const UserEditModalForm: FC<Props> = ({user, isUserLoading}) => {
             {/* begin::Label */}
             <label className='required fw-bold fs-6 mb-2'>
               {' '}
-              {intl.formatMessage({id: 'AUTH.INPUT.LASTNAME'})}
+              {intl.formatMessage({id: 'AUTH.INPUT.DESCRIPTION'})}
             </label>
 
             {/* end::Label */}
 
             {/* begin::Input */}
             <textarea
-              placeholder={intl.formatMessage({id: 'AUTH.INPUT.LASTNAME'})}
+              placeholder={intl.formatMessage({id: 'AUTH.INPUT.DESCRIPTION'})}
               {...formik.getFieldProps('description')}
               name='description'
               className={clsx(
@@ -199,18 +199,18 @@ const UserEditModalForm: FC<Props> = ({user, isUserLoading}) => {
           </div>
 
           <div className='fv-row mb-7'>
-            <label className='fw-bold fs-6 mb-2'>Items</label>
+            <label className='fw-bold fs-6 mb-2'>سوالات</label>
 
             {items.map((item, index) => (
               <div key={index} className='d-flex align-items-center mb-2'>
                 <textarea
-                  placeholder='Question'
+                  placeholder='سوال'
                   value={item.question}
                   onChange={(e) => handleItemChange(e, index, 'question')}
                   className='form-control form-control-solid me-2'
                 />
                 <textarea
-                  placeholder='Response'
+                  placeholder='پاسخ'
                   value={item.response}
                   onChange={(e) => handleItemChange(e, index, 'response')}
                   className='form-control form-control-solid me-2'
@@ -220,13 +220,13 @@ const UserEditModalForm: FC<Props> = ({user, isUserLoading}) => {
                   className='btn btn-light me-3'
                   onClick={() => handleItemDelete(index)}
                 >
-                  Delete
+                  حذف
                 </button>
               </div>
             ))}
 
             <button className='btn btn-primary' type='button' onClick={handleItemAdd}>
-              Add Item
+              افزودن سوال
             </button>
           </div>
 
@@ -245,7 +245,7 @@ const UserEditModalForm: FC<Props> = ({user, isUserLoading}) => {
             data-kt-users-modal-action='cancel'
             disabled={formik.isSubmitting || isUserLoading}
           >
-            Discard
+            {intl.formatMessage({id: 'AUTH.BOTTUN.CANCEL'})}
           </button>
 
           <button
@@ -254,10 +254,13 @@ const UserEditModalForm: FC<Props> = ({user, isUserLoading}) => {
             data-kt-users-modal-action='submit'
             disabled={isUserLoading || formik.isSubmitting || !formik.isValid || !formik.touched}
           >
-            <span className='indicator-label'>Submit</span>
+            <span className='indicator-label'>
+              {' '}
+              {intl.formatMessage({id: 'AUTH.BOTTUN.SUBMIT'})}
+            </span>
             {(formik.isSubmitting || isUserLoading) && (
               <span className='indicator-progress'>
-                Please wait...{' '}
+                {intl.formatMessage({id: 'AUTH.BOTTUN.LOADING'})}
                 <span className='spinner-border spinner-border-sm align-middle ms-2'></span>
               </span>
             )}

@@ -4,7 +4,7 @@ import {UsersListWrapper} from './users-list/UsersList'
 
 const usersBreadcrumbs: Array<PageLink> = [
   {
-    title: 'Secretariat Management',
+    title: 'مدیریت دبیرخانه',
     path: '/apps/secretariat-management/secretariats',
     isSeparator: false,
     isActive: false,
@@ -25,7 +25,7 @@ const SecretariatsPage = () => {
           path='secretariats'
           element={
             <>
-              <PageTitle breadcrumbs={usersBreadcrumbs}>Users list</PageTitle>
+              <PageTitle breadcrumbs={usersBreadcrumbs}>لیست دبیرخانه ها</PageTitle>
               <UsersListWrapper />
             </>
           }

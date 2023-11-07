@@ -18,7 +18,7 @@ const usersColumns: ReadonlyArray<Column<User>> = [
   },
   {
     Header: (props) => (
-      <UserCustomHeader tableProps={props} title='USER.TABLE.FULLNAME' className='min-w-125px' />
+      <UserCustomHeader tableProps={props} title='SEC.TABLE.BOSS' className='min-w-125px' />
     ),
     id: 'boss',
     Cell: ({...props}) => <UserInfoCell user={props.data[props.row.index]} />,
@@ -26,7 +26,7 @@ const usersColumns: ReadonlyArray<Column<User>> = [
 
   {
     Header: (props) => (
-      <UserCustomHeader tableProps={props} title='USER.TABLE.NATIONALID' className='min-w-125px' />
+      <UserCustomHeader tableProps={props} title='SEC.TABLE.TITLE' className='min-w-125px' />
     ),
     id: 'title',
     Cell: ({...props}) => <UserLastLoginCell national_id={props.data[props.row.index].title} />,
@@ -34,15 +34,15 @@ const usersColumns: ReadonlyArray<Column<User>> = [
 
   {
     Header: (props) => (
-      <UserCustomHeader tableProps={props} title='USER.TABLE.NATIONALID' className='min-w-125px' />
+      <UserCustomHeader tableProps={props} title='SEC.TABLE.TYPE' className='min-w-125px' />
     ),
     id: 'type',
-    Cell: ({...props}) => <UserTwoStepsCell phoneNumber={props.data[props.row.index].type} />,
+    Cell: ({...props}) => <UserTwoStepsCell phoneNumber={props.data[props.row.index].faType} />,
   },
 
   {
     Header: (props) => (
-      <UserCustomHeader tableProps={props} title='USER.TABLE.CREATEDAT' className='min-w-125px' />
+      <UserCustomHeader tableProps={props} title='SEC.TABLE.CREATEDAT' className='min-w-125px' />
     ),
     id: 'createdAt',
     Cell: ({...props}) => <UserCreatedAt created_at={props.data[props.row.index].createdAt} />,

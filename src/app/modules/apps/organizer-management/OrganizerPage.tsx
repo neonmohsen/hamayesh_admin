@@ -4,7 +4,7 @@ import {UsersListWrapper} from './users-list/UsersList'
 
 const usersBreadcrumbs: Array<PageLink> = [
   {
-    title: 'Organizer Management',
+    title: 'مدیریت برگذارکننده ها',
     path: '/apps/organizer-management/organizers',
     isSeparator: false,
     isActive: false,
@@ -25,7 +25,7 @@ const OrganizerPage = () => {
           path='organizers'
           element={
             <>
-              <PageTitle breadcrumbs={usersBreadcrumbs}>Users list</PageTitle>
+              <PageTitle breadcrumbs={usersBreadcrumbs}>لیست برگذارکننده ها</PageTitle>
               <UsersListWrapper />
             </>
           }

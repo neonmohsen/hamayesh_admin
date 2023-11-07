@@ -18,7 +18,7 @@ const usersColumns: ReadonlyArray<Column<User>> = [
   },
   {
     Header: (props) => (
-      <UserCustomHeader tableProps={props} title='USER.TABLE.FULLNAME' className='min-w-125px' />
+      <UserCustomHeader tableProps={props} title='TAG.TABLE.TITLE' className='min-w-125px' />
     ),
     id: 'title',
     Cell: ({...props}) => <UserInfoCell user={props.data[props.row.index]} />,
@@ -26,7 +26,7 @@ const usersColumns: ReadonlyArray<Column<User>> = [
 
   {
     Header: (props) => (
-      <UserCustomHeader tableProps={props} title='USER.TABLE.NATIONALID' className='min-w-125px' />
+      <UserCustomHeader tableProps={props} title='TAG.TABLE.SLUG' className='min-w-125px' />
     ),
     id: 'slug',
     Cell: ({...props}) => <UserLastLoginCell national_id={props.data[props.row.index].slug} />,
@@ -34,7 +34,7 @@ const usersColumns: ReadonlyArray<Column<User>> = [
 
   {
     Header: (props) => (
-      <UserCustomHeader tableProps={props} title='USER.TABLE.CREATEDAT' className='min-w-125px' />
+      <UserCustomHeader tableProps={props} title='TAG.TABLE.CREATEDAT' className='min-w-125px' />
     ),
     id: 'createdAt',
     Cell: ({...props}) => <UserCreatedAt created_at={props.data[props.row.index].createdAt} />,

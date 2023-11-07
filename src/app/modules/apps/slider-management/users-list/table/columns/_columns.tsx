@@ -18,7 +18,7 @@ const usersColumns: ReadonlyArray<Column<User>> = [
   },
   {
     Header: (props) => (
-      <UserCustomHeader tableProps={props} title='USER.TABLE.FULLNAME' className='min-w-125px' />
+      <UserCustomHeader tableProps={props} title='SLIDER.TABLE.SLIDER' className='min-w-125px' />
     ),
     id: 'title',
     Cell: ({...props}) => <UserInfoCell user={props.data[props.row.index]} />,
@@ -26,21 +26,21 @@ const usersColumns: ReadonlyArray<Column<User>> = [
 
   {
     Header: (props) => (
-      <UserCustomHeader tableProps={props} title='USER.TABLE.NATIONALID' className='min-w-125px' />
+      <UserCustomHeader tableProps={props} title='SLIDER.TABLE.LINK' className='min-w-125px' />
     ),
     id: 'link',
     Cell: ({...props}) => <UserLastLoginCell national_id={props.data[props.row.index].link} />,
   },
   {
     Header: (props) => (
-      <UserCustomHeader tableProps={props} title='USER.TABLE.PHONENUMBER' className='min-w-125px' />
+      <UserCustomHeader tableProps={props} title='SLIDER.TABLE.ACTIVE' className='min-w-125px' />
     ),
     id: 'isActive',
     Cell: ({...props}) => <UserTwoStepsCell isActive={props.data[props.row.index].isActive} />,
   },
   {
     Header: (props) => (
-      <UserCustomHeader tableProps={props} title='USER.TABLE.CREATEDAT' className='min-w-125px' />
+      <UserCustomHeader tableProps={props} title='SLIDER.TABLE.CREATEDAT' className='min-w-125px' />
     ),
     id: 'createdAt',
     Cell: ({...props}) => <UserCreatedAt created_at={props.data[props.row.index].createdAt} />,

@@ -7,11 +7,11 @@ import {useMemo} from 'react'
 
 const mappedLabel = (label: string): string => {
   if (label === '&laquo; Previous') {
-    return 'Previous'
+    return 'قبلی'
   }
 
   if (label === 'Next &raquo;') {
-    return 'Next'
+    return 'بعدی'
   }
 
   return label
@@ -92,6 +92,8 @@ const UsersListPagination = () => {
 
   const paginationLinks = useMemo(() => sliceLinks(pagination), [pagination])
 
+  console.log(paginationLinks)
+
   return (
     <div className='row'>
       <div className='col-sm-12 col-md-5 d-flex align-items-center justify-content-center justify-content-md-start'></div>
@@ -104,7 +106,7 @@ const UsersListPagination = () => {
               })}
             >
               <a onClick={() => updatePage(1)} style={{cursor: 'pointer'}} className='page-link'>
-                First
+                اولین صفحه
               </a>
             </li>
             {paginationLinks
@@ -117,14 +119,14 @@ const UsersListPagination = () => {
                   className={clsx('page-item', {
                     active: pagination.page === link.page,
                     disabled: isLoading,
-                    previous: link.label === 'Previous',
-                    next: link.label === 'Next',
+                    previous: link.label === 'قبلی',
+                    next: link.label === 'بعدی',
                   })}
                 >
                   <a
                     className={clsx('page-link', {
-                      'page-text': link.label === 'Previous' || link.label === 'Next',
-                      'me-5': link.label === 'Previous',
+                      'page-text': link.label === 'قبلی' || link.label === 'بعدی',
+                      'me-5': link.label === 'قبلی',
                     })}
                     onClick={() => updatePage(link.page)}
                     style={{cursor: 'pointer'}}
@@ -143,7 +145,7 @@ const UsersListPagination = () => {
                 style={{cursor: 'pointer'}}
                 className='page-link'
               >
-                Last
+                آخرین صفحه
               </a>
             </li>
           </ul>

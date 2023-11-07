@@ -19,7 +19,7 @@ const usersColumns: ReadonlyArray<Column<User>> = [
   },
   {
     Header: (props) => (
-      <UserCustomHeader tableProps={props} title='USER.TABLE.FULLNAME' className='min-w-125px' />
+      <UserCustomHeader tableProps={props} title='COMMENT.TABLE.FULLNAME' className='min-w-125px' />
     ),
     id: 'userFirstName',
     Cell: ({...props}) => <UserInfoCell user={props.data[props.row.index]} />,
@@ -27,7 +27,7 @@ const usersColumns: ReadonlyArray<Column<User>> = [
 
   {
     Header: (props) => (
-      <UserCustomHeader tableProps={props} title='USER.TABLE.NATIONALID' className='min-w-125px' />
+      <UserCustomHeader tableProps={props} title='COMMENT.TABLE.COMMENT' className='min-w-125px' />
     ),
     id: 'comment',
     Cell: ({...props}) => <UserTwoStepsCell comment={props.data[props.row.index].comment} />,
@@ -35,7 +35,7 @@ const usersColumns: ReadonlyArray<Column<User>> = [
 
   {
     Header: (props) => (
-      <UserCustomHeader tableProps={props} title='USER.TABLE.NATIONALID' className='min-w-125px' />
+      <UserCustomHeader tableProps={props} title='COMMENT.TABLE.STATUS' className='min-w-125px' />
     ),
     id: 'status',
     Cell: ({...props}) => <UserStatus national_id={props.data[props.row.index].status} />,
@@ -43,7 +43,7 @@ const usersColumns: ReadonlyArray<Column<User>> = [
 
   {
     Header: (props) => (
-      <UserCustomHeader tableProps={props} title='USER.TABLE.NATIONALID' className='min-w-125px' />
+      <UserCustomHeader tableProps={props} title='COMMENT.TABLE.IP' className='min-w-125px' />
     ),
     id: 'userIp',
     Cell: ({...props}) => <UserLastLoginCell national_id={props.data[props.row.index].userIp} />,
@@ -51,7 +51,11 @@ const usersColumns: ReadonlyArray<Column<User>> = [
 
   {
     Header: (props) => (
-      <UserCustomHeader tableProps={props} title='USER.TABLE.CREATEDAT' className='min-w-125px' />
+      <UserCustomHeader
+        tableProps={props}
+        title='COMMENT.TABLE.CREATEDAT'
+        className='min-w-125px'
+      />
     ),
     id: 'createdAt',
     Cell: ({...props}) => <UserCreatedAt created_at={props.data[props.row.index].createdAt} />,

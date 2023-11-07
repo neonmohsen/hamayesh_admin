@@ -22,7 +22,7 @@ const UserActionsCell: FC<Props> = ({id}) => {
 
   const openEditModal = () => {
     setItemIdForUpdate(id)
-  }
+  } 
 
   const deleteItem = useMutation(() => deleteUser(id), {
     // 💡 response of the mutation is passed to onSuccess
@@ -40,7 +40,7 @@ const UserActionsCell: FC<Props> = ({id}) => {
         data-kt-menu-trigger='click'
         data-kt-menu-placement='bottom-end'
       >
-        Actions
+        اقدام ها
         <KTIcon iconName='down' className='fs-5 m-0' />
       </a>
       {/* begin::Menu */}
@@ -51,7 +51,7 @@ const UserActionsCell: FC<Props> = ({id}) => {
         {/* begin::Menu item */}
         <div className='menu-item px-3'>
           <a className='menu-link px-3' onClick={openEditModal}>
-            Edit
+            ویرایش
           </a>
         </div>
         {/* end::Menu item */}
@@ -63,7 +63,7 @@ const UserActionsCell: FC<Props> = ({id}) => {
             data-kt-users-table-filter='delete_row'
             onClick={async () => await deleteItem.mutateAsync()}
           >
-            Delete
+            حذف
           </a>
         </div>
         {/* end::Menu item */}
