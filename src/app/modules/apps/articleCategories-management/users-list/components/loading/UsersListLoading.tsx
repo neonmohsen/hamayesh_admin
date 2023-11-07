@@ -12,7 +12,7 @@ const UsersListLoading = () => {
     left: 'calc(50% - 4rem)',
   }
 
-  return <div style={{...styles, position: 'absolute', textAlign: 'center'}}>Processing...</div>
+  return <div style={{...styles, position: 'absolute', textAlign: 'center'}}>لطفا صبر کنید ...</div>
 }
 
 export {UsersListLoading}

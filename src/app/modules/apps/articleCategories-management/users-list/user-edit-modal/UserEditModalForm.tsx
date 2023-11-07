@@ -150,14 +150,14 @@ const UserEditModalForm: FC<Props> = ({user, isUserLoading}) => {
             {/* begin::Label */}
             <label className='required fw-bold fs-6 mb-2'>
               {' '}
-              {intl.formatMessage({id: 'AUTH.INPUT.FIRSTNAME'})}
+              {intl.formatMessage({id: 'AUTH.INPUT.TITLE'})}
             </label>
 
             {/* end::Label */}
 
             {/* begin::Input */}
             <input
-              placeholder={intl.formatMessage({id: 'AUTH.INPUT.FIRSTNAME'})}
+              placeholder={intl.formatMessage({id: 'AUTH.INPUT.TITLE'})}
               {...formik.getFieldProps('title')}
               type='text'
               name='title'
@@ -185,14 +185,14 @@ const UserEditModalForm: FC<Props> = ({user, isUserLoading}) => {
             {/* begin::Label */}
             <label className='required fw-bold fs-6 mb-2'>
               {' '}
-              {intl.formatMessage({id: 'AUTH.INPUT.LASTNAME'})}
+              {intl.formatMessage({id: 'AUTH.INPUT.DESCRIPTION'})}
             </label>
 
             {/* end::Label */}
 
             {/* begin::Input */}
             <textarea
-              placeholder={intl.formatMessage({id: 'AUTH.INPUT.LASTNAME'})}
+              placeholder={intl.formatMessage({id: 'AUTH.INPUT.DESCRIPTION'})}
               {...formik.getFieldProps('description')}
               name='description'
               className={clsx(
@@ -219,7 +219,7 @@ const UserEditModalForm: FC<Props> = ({user, isUserLoading}) => {
           <div className='fv-row mb-7'>
             {/* begin::Label */}
             <label className='required fw-bold fs-6 mb-2'>
-              {intl.formatMessage({id: 'AUTH.INPUT.GENDER'})}
+              {intl.formatMessage({id: 'AUTH.INPUT.REFEREES'})}
             </label>
             {/* end::Label */}
 
@@ -235,7 +235,7 @@ const UserEditModalForm: FC<Props> = ({user, isUserLoading}) => {
                 formik.setFieldValue('referees', selectedIds)
                 setSelectedUsers(selectedOptions ? Array.from(selectedOptions) : [])
               }}
-              placeholder={intl.formatMessage({id: 'AUTH.INPUT.GENDER'})}
+              placeholder={intl.formatMessage({id: 'AUTH.INPUT.REFEREES'})}
               className={clsx(
                 'form-control form-control-solid mb-3 mb-lg-0',
                 {'is-invalid': formik.touched.referees && formik.errors.referees},

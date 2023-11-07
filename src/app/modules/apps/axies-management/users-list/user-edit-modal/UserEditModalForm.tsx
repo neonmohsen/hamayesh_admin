@@ -124,14 +124,14 @@ const UserEditModalForm: FC<Props> = ({user, isUserLoading}) => {
             {/* begin::Label */}
             <label className='required fw-bold fs-6 mb-2'>
               {' '}
-              {intl.formatMessage({id: 'AUTH.INPUT.FIRSTNAME'})}
+              {intl.formatMessage({id: 'AUTH.INPUT.TITLE'})}
             </label>
 
             {/* end::Label */}
 
             {/* begin::Input */}
             <input
-              placeholder={intl.formatMessage({id: 'AUTH.INPUT.FIRSTNAME'})}
+              placeholder={intl.formatMessage({id: 'AUTH.INPUT.TITLE'})}
               {...formik.getFieldProps('title')}
               type='text'
               name='title'
@@ -159,7 +159,7 @@ const UserEditModalForm: FC<Props> = ({user, isUserLoading}) => {
             {/* begin::Label */}
             <label className='required fw-bold fs-6 mb-2'>
               {' '}
-              {intl.formatMessage({id: 'AUTH.INPUT.LASTNAME'})}
+              {intl.formatMessage({id: 'AUTH.INPUT.DESCRIPTION'})}
             </label>
             {/* end::Label */}
 
@@ -186,13 +186,13 @@ const UserEditModalForm: FC<Props> = ({user, isUserLoading}) => {
           <div className='fv-row mb-7 '>
             {/* begin::Label */}
             <label className='required fw-bold fs-6 mb-2'>
-              {intl.formatMessage({id: 'AUTH.INPUT.GENDER'})}
+              {intl.formatMessage({id: 'AUTH.INPUT.CATEGORY'})}
             </label>
             {/* end::Label */}
 
             {/* begin::Input */}
             <select
-              placeholder={intl.formatMessage({id: 'AUTH.INPUT.GENDER'})}
+              placeholder={intl.formatMessage({id: 'AUTH.INPUT.CATEGORY'})}
               {...formik.getFieldProps('parent')}
               className={clsx(
                 'form-control form-control-solid mb-3 mb-lg-0',
@@ -205,7 +205,7 @@ const UserEditModalForm: FC<Props> = ({user, isUserLoading}) => {
               autoComplete='off'
               disabled={formik.isSubmitting || isUserLoading}
             >
-              <option value=''> {intl.formatMessage({id: 'AUTH.INPUT.GENDER'})}</option>
+              <option value=''> {intl.formatMessage({id: 'AUTH.INPUT.CATEGORY'})}</option>
               {categoryList.map((item) => {
                 return <option value={item.id}>{item.title}</option>
               })}

@@ -167,14 +167,14 @@ const UserEditModalForm: FC<Props> = ({user, isUserLoading}) => {
             {/* begin::Label */}
             <label className='required fw-bold fs-6 mb-2'>
               {' '}
-              {intl.formatMessage({id: 'AUTH.INPUT.FIRSTNAME'})}
+              {intl.formatMessage({id: 'AUTH.INPUT.TITLE'})}
             </label>
 
             {/* end::Label */}
 
             {/* begin::Input */}
             <input
-              placeholder={intl.formatMessage({id: 'AUTH.INPUT.FIRSTNAME'})}
+              placeholder={intl.formatMessage({id: 'AUTH.INPUT.TITLE'})}
               {...formik.getFieldProps('title')}
               type='text'
               name='title'
@@ -202,14 +202,14 @@ const UserEditModalForm: FC<Props> = ({user, isUserLoading}) => {
             {/* begin::Label */}
             <label className='required fw-bold fs-6 mb-2'>
               {' '}
-              {intl.formatMessage({id: 'AUTH.INPUT.LASTNAME'})}
+              {intl.formatMessage({id: 'AUTH.INPUT.DESCRIPTION'})}
             </label>
 
             {/* end::Label */}
 
             {/* begin::Input */}
             <textarea
-              placeholder={intl.formatMessage({id: 'AUTH.INPUT.LASTNAME'})}
+              placeholder={intl.formatMessage({id: 'AUTH.INPUT.DESCRIPTION'})}
               {...formik.getFieldProps('description')}
               name='description'
               className={clsx(
@@ -239,7 +239,7 @@ const UserEditModalForm: FC<Props> = ({user, isUserLoading}) => {
               {/* begin::Label */}
               <label className='required fw-bold fs-6 mb-2'>
                 {' '}
-                {intl.formatMessage({id: 'AUTH.INPUT.LASTNAME'})}
+                {intl.formatMessage({id: 'AUTH.INPUT.MESSAGE'})}
               </label>
               {/* end::Label */}
 
@@ -266,7 +266,7 @@ const UserEditModalForm: FC<Props> = ({user, isUserLoading}) => {
           <div className='fv-row mb-7'>
             {/* begin::Label */}
             <label className='required fw-bold fs-6 mb-2'>
-              {intl.formatMessage({id: 'AUTH.INPUT.GENDER'})}
+              {intl.formatMessage({id: 'AUTH.INPUT.CATEGORY'})}
             </label>
             {/* end::Label */}
 
@@ -278,7 +278,7 @@ const UserEditModalForm: FC<Props> = ({user, isUserLoading}) => {
                 formik.setFieldValue('category', selectedOption ? selectedOption.value : null)
                 setSelectedCategory(selectedOption)
               }}
-              placeholder={intl.formatMessage({id: 'AUTH.INPUT.BOSS'})}
+              placeholder={intl.formatMessage({id: 'AUTH.INPUT.CATEGORY'})}
               className={clsx(
                 'form-control form-control-solid mb-3 mb-lg-0',
                 {'is-invalid': formik.touched.category && formik.errors.category},
@@ -303,7 +303,7 @@ const UserEditModalForm: FC<Props> = ({user, isUserLoading}) => {
               {/* begin::Label */}
               <label className='required fw-bold fs-6 mb-5'>
                 {' '}
-                {intl.formatMessage({id: 'AUTH.INPUT.ROLE'})}
+                {intl.formatMessage({id: 'AUTH.INPUT.STATUS'})}
               </label>
               {/* end::Label */}
               {/* begin::Roles */}

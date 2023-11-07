@@ -204,5 +204,16 @@
   "NEWS.TABLE.WRITER": "نویسنده",
   "NEWS.TABLE.PUBLISHDATE": "تاریخ انتشار",
   "NEWS.TABLE.CREATEDAT": "تاریخ ساخت",
-  "AUTH.INPUT.TAG": "تگ ها"
+  "AUTH.INPUT.TAG": "تگ ها",
+  "AUTH.INPUT.REFEREES": "داور ها",
+  "AXIES.TABLE.TITLE": "عنوان",
+  "AXIES.TABLE.CREATEDAT": "تاریخ ساخت",
+  "ARTICLE.TABLE.USER": "اطلاعات کاربر",
+  "ARTICLE.TABLE.TITLE": "عنوان",
+  "ARTICLE.TABLE.STATUS": "وضعیت",
+  "ARTICLE.TABLE.CREATEDAT": "تاریخ ساخت",
+  "AUTH.INPUT.MESSAGE": "پیام داور",
+  "AUTH.INPUT.SUCCESS": "تایید شده",
+  "AUTH.INPUT.PENDING": "درحال انتظار",
+  "AUTH.INPUT.FAILED": "رد شده"
 }

@@ -16,8 +16,8 @@ const UserInfoCell: FC<Props> = ({user}) => (
         {user.userId?.profileImage ? (
           <div className='symbol-label'>
             <img
-              src={toAbsoluteUrl(`${process.env.REACT_APP_BASE_URL}/${user.userId.profileImage}`)}
-              alt={user.userId.firstName}
+              src={toAbsoluteUrl(`${process.env.REACT_APP_BASE_URL}/${user.userId?.profileImage}`)}
+              alt={user.userId?.firstName}
               className='w-100'
             />
           </div>
@@ -36,9 +36,9 @@ const UserInfoCell: FC<Props> = ({user}) => (
     </div>
     <div className='d-flex flex-column'>
       <a href='#' className='text-gray-800 text-hover-primary mb-1'>
-        {user.userId.firstName} {user.userId.lastName}
+        {user.userId?.firstName} {user.userId?.lastName}
       </a>
-      <span>{user.userId.email}</span>
+      <span>{user.userId?.email}</span>
     </div>
   </div>
 )
