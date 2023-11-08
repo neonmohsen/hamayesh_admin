@@ -7,7 +7,7 @@ export function MenuInner() {
   const intl = useIntl()
   return (
     <>
-      <MenuItem title={intl.formatMessage({id: 'MENU.DASHBOARD'})} to='/dashboard' />
+      {/* <MenuItem title={intl.formatMessage({id: 'MENU.DASHBOARD'})} to='/dashboard' />
       <MenuItem title='Layout Builder' to='/builder' />
       <MenuInnerWithSub
         title='Crafted'
@@ -15,7 +15,6 @@ export function MenuInner() {
         menuPlacement='bottom-start'
         menuTrigger='click'
       >
-        {/* PAGES */}
         <MenuInnerWithSub
           title='Pages'
           to='/crafted/pages'
@@ -55,7 +54,6 @@ export function MenuInner() {
           </MenuInnerWithSub>
         </MenuInnerWithSub>
 
-        {/* ACCOUNT */}
         <MenuInnerWithSub
           title='Accounts'
           to='/crafted/accounts'
@@ -68,7 +66,6 @@ export function MenuInner() {
           <MenuItem to='/crafted/account/settings' title='Settings' hasBullet={true} />
         </MenuInnerWithSub>
 
-        {/* ERRORS */}
         <MenuInnerWithSub
           title='Errors'
           to='/error'
@@ -81,7 +78,6 @@ export function MenuInner() {
           <MenuItem to='/error/500' title='Error 500' hasBullet={true} />
         </MenuInnerWithSub>
 
-        {/* Widgets */}
         <MenuInnerWithSub
           title='Widgets'
           to='/crafted/widgets'
@@ -97,7 +93,7 @@ export function MenuInner() {
           <MenuItem to='/crafted/widgets/tables' title='Tables' hasBullet={true} />
           <MenuItem to='/crafted/widgets/feeds' title='Feeds' hasBullet={true} />
         </MenuInnerWithSub>
-      </MenuInnerWithSub>
+      </MenuInnerWithSub> */}
 
       <MenuInnerWithSub title='Apps' to='/apps' menuPlacement='bottom-start' menuTrigger='click'>
         {/* PAGES */}
@@ -165,7 +161,7 @@ export function MenuInner() {
         <MenuItem icon='shield-tick' to='/apps/axies-management/axies' title='مدیریت محور ها' />
         <MenuItem icon='shield-tick' to='/apps/article-management/articles' title='مدیریت مقالات' />
       </MenuInnerWithSub>
-      <MenuInnerWithSub
+      {/* <MenuInnerWithSub
         isMega={true}
         title='Mega menu'
         to='/mega-menu'
@@ -173,7 +169,7 @@ export function MenuInner() {
         menuTrigger='click'
       >
         <MegaMenu />
-      </MenuInnerWithSub>
+      </MenuInnerWithSub> */}
     </>
   )
 }
